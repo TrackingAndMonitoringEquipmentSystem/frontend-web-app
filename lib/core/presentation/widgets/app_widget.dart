@@ -13,18 +13,16 @@ class AppWidget extends StatelessWidget {
       title: 'toollo',
       debugShowCheckedModeBanner: false,
       theme: theme.copyWith(
+        hoverColor: const Color.fromRGBO(85, 8, 182, 1),
         dividerColor: const Color.fromRGBO(8, 8, 8, 0.15),
         scaffoldBackgroundColor: const Color.fromRGBO(245, 244, 252, 1),
         colorScheme: theme.colorScheme.copyWith(
           primary: const Color.fromRGBO(85, 8, 182, 1),
-          onPrimary: const Color.fromRGBO(254, 253, 255, 1),
           primaryContainer: const Color.fromRGBO(25, 2, 54, 1),
           secondary: const Color.fromRGBO(241, 239, 255, 1),
-          onSecondary: const Color.fromRGBO(85, 8, 182, 1),
           tertiary: const Color.fromRGBO(128, 36, 244, 1),
           surface: const Color.fromRGBO(254, 253, 255, 1),
           background: const Color.fromRGBO(245, 244, 252, 1),
-          onBackground: const Color.fromRGBO(25, 2, 54, 1),
           outline: Colors.grey.shade400,
           error: Colors.red,
         ),
@@ -65,7 +63,7 @@ class AppWidget extends StatelessWidget {
           button: TextStyle(
             color: Color.fromRGBO(254, 253, 255, 1),
             fontSize: 15,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w400,
             fontFamily: 'Sarabun',
           ),
         ),
