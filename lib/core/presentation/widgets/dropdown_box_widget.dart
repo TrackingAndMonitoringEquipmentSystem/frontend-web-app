@@ -6,13 +6,15 @@ class DropdownBoxWidget extends HookWidget {
   final List<dynamic> items;
   // final void Function(String?) onChanged;
   final Function onChanged;
-  final width;
+  // final padding;
+  // final width;
   final height;
   const DropdownBoxWidget({
     required this.value,
     required this.items,
     required this.onChanged,
-    this.width = 192,
+    // required this.padding,
+    // this.width = 192,
     this.height = 48 * 0.8,
   });
   @override
@@ -21,7 +23,7 @@ class DropdownBoxWidget extends HookWidget {
     return Container(
       margin: EdgeInsets.only(right: 20),
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-      width: width,
+      // width: width,
       height: height,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
