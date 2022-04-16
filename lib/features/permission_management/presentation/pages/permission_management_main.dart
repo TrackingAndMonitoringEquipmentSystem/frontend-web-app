@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:frontend_web_app/core/presentation/widgets/account_cell_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/dropdown_box_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/search_box_widget.dart';
+import 'package:frontend_web_app/core/presentation/widgets/table_cell_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/table_header_widget.dart';
 import 'package:frontend_web_app/features/permission_management/presentation/pages/permission_management_approve.dart';
 
@@ -14,7 +16,7 @@ class PermissionManagementMainPage extends HookWidget {
     final currentTab = useState(0);
     final roleDropdown = useState<String>('ทุกตำแหน่ง');
     final departmentDropdown = useState<String>('ทุกแผนก');
-    // final checkBox = useState<bool>(false);
+    print(MediaQuery.of(context).size.width);
 
     return DefaultTabController(
       length: 4,
@@ -128,57 +130,56 @@ class PermissionManagementMainPage extends HookWidget {
                                 Row(
                                   children: [
                                     Expanded(
-                                      flex: 13,
-                                      child: Row(
-                                        children: [
-                                          SearchBoxWidget(
-                                              hintText:
-                                                  'ชื่อ - นามสกุล, อีเมล, เบอร์โทรศัพท์'),
-                                          DropdownBoxWidget(
-                                            value: roleDropdown.value,
-                                            items: <String>[
-                                              'ทุกตำแหน่ง',
-                                              'Super admin',
-                                              'Admin',
-                                              'Master maintainer',
-                                              'Maintainer'
-                                            ],
-                                            onChanged: (newValue) {
-                                              if (newValue != null) {
-                                                roleDropdown.value = newValue;
-                                              }
-                                            },
-                                          ),
-                                          DropdownBoxWidget(
-                                            value: departmentDropdown.value,
-                                            items: <String>[
-                                              'ทุกแผนก',
-                                              'ESL Lab',
-                                              'Hardware Lab',
-                                              'HCL Lab',
-                                              'ISAC Lab',
-                                              'Network Lab'
-                                            ],
-                                            onChanged: (String? newValue) {
-                                              if (newValue != null) {
-                                                departmentDropdown.value =
-                                                    newValue;
-                                              }
-                                            },
-                                          ),
+                                      flex: 18,
+                                      child: SearchBoxWidget(
+                                          hintText:
+                                              'ชื่อ - นามสกุล, อีเมล, เบอร์โทรศัพท์'),
+                                    ),
+                                    Expanded(
+                                      flex: 11,
+                                      child: DropdownBoxWidget(
+                                        value: roleDropdown.value,
+                                        items: <String>[
+                                          'ทุกตำแหน่ง',
+                                          'Super admin',
+                                          'Admin',
+                                          'Master maintainer',
+                                          'Maintainer'
                                         ],
+                                        onChanged: (newValue) {
+                                          if (newValue != null) {
+                                            roleDropdown.value = newValue;
+                                          }
+                                        },
                                       ),
                                     ),
                                     Expanded(
-                                        flex: 2,
+                                      flex: 11,
+                                      child: DropdownBoxWidget(
+                                        value: departmentDropdown.value,
+                                        items: <String>[
+                                          'ทุกแผนก',
+                                          'ESL Lab',
+                                          'Hardware Lab',
+                                          'HCL Lab',
+                                          'ISAC Lab',
+                                          'Network Lab'
+                                        ],
+                                        onChanged: (String? newValue) {
+                                          if (newValue != null) {
+                                            departmentDropdown.value = newValue;
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                    Expanded(flex: 12, child: SizedBox()),
+                                    Expanded(
+                                        flex: 8,
                                         child: Container(
-                                          width: 192 * 0.8,
+                                          // width: 192 * 0.8,
                                           height: 48 * 0.8,
                                           child: ElevatedButton(
                                             style: ElevatedButton.styleFrom(
-                                              textStyle: Theme.of(context)
-                                                  .primaryTextTheme
-                                                  .button,
                                               primary: Theme.of(context)
                                                   .colorScheme
                                                   .primaryContainer,
@@ -189,7 +190,12 @@ class PermissionManagementMainPage extends HookWidget {
                                               ),
                                             ),
                                             onPressed: (() {}),
-                                            child: Text('+ เพิ่มผู้ใช้งาน'),
+                                            child: Text(
+                                              '+ เพิ่มผู้ใช้งาน',
+                                              style: Theme.of(context)
+                                                  .primaryTextTheme
+                                                  .button,
+                                            ),
                                           ),
                                         ))
                                   ],
@@ -203,8 +209,8 @@ class PermissionManagementMainPage extends HookWidget {
                                     1: FlexColumnWidth(37),
                                     2: FlexColumnWidth(24),
                                     3: FlexColumnWidth(22),
-                                    4: FlexColumnWidth(24),
-                                    5: FlexColumnWidth(29),
+                                    4: FlexColumnWidth(20),
+                                    5: FlexColumnWidth(33),
                                   },
                                   columnHeader: [
                                     'ชื่อ - นามสกุล',
@@ -214,90 +220,77 @@ class PermissionManagementMainPage extends HookWidget {
                                     'เบอร์โทรศัพท์',
                                     ' ',
                                   ],
-                                  tableRow: [
-                                    TableRow(
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                                bottom: BorderSide(
-                                                    width: 1,
-                                                    color:
-                                                        Colors.grey.shade300))),
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 38.4, vertical: 16),
-                                            child: Row(
-                                              children: [
-                                                CircleAvatar(
-                                                  radius: 20,
-                                                  backgroundImage: Image.asset(
-                                                          'assets/images/core/profile_image_small.jpg')
-                                                      .image,
-                                                ),
-                                                SizedBox(
-                                                  width: 20,
-                                                ),
-                                                Text(
-                                                  'Saitan Kittibullungkul',
-                                                )
-                                              ],
-                                            ),
+                                ),
+                                AccoutCellWidget(
+                                  imgSrc:
+                                      'assets/images/core/profile_image_small.jpg',
+                                  name: 'Saitan Kittibullungkul',
+                                  email: '61011104@kmitl.ac.th',
+                                  role: 'Super admin',
+                                  department: 'Hardware Lab',
+                                  phone: '096-904-3542',
+                                  action: Padding(
+                                    padding: const EdgeInsets.only(left: 38.4),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: TableCellWidget.iconButtonCell(
+                                            context: context,
+                                            iconScr: Icons.edit_outlined,
+                                            onPressed: () {},
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 38.4),
-                                            child: Text(
-                                              '61011104@kmitl.ac.th',
-                                            ),
+                                        ),
+
+                                        Expanded(
+                                          child: TableCellWidget.iconButtonCell(
+                                            context: context,
+                                            iconScr: Icons.more_horiz,
+                                            onPressed: () {},
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 38.4),
-                                            child: Text(
-                                              'Super admin',
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 38.4),
-                                            child: Text(
-                                              'Hardware Lab',
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 38.4),
-                                            child: Text(
-                                              '096-904-3542',
-                                            ),
-                                          ),
-                                          Row(
-                                            children: [
-                                              IconButton(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          38.4, 0.0, 20, 0.0),
-                                                  color: Colors.grey.shade500,
-                                                  icon: Icon(
-                                                    Icons.edit_outlined,
-                                                  ),
-                                                  onPressed: () {}),
-                                              IconButton(
-                                                color: Colors.grey.shade500,
-                                                icon: Icon(
-                                                  Icons.more_horiz,
-                                                ),
-                                                onPressed: () {},
-                                              )
-                                            ],
-                                          ),
-                                        ])
-                                  ],
-                                )
+                                        ),
+                                        SizedBox(
+                                          width: 60,
+                                        ),
+
+                                        // Material(
+                                        //   shape: const CircleBorder(),
+                                        //   // color: Colors.amber,
+                                        //   child: IconButton(
+                                        //     // padding: EdgeInsets.only(
+                                        //     //     left: 16, right: 16),
+                                        //     icon: Icon(Icons.play_arrow,
+                                        //         color: Colors.red, size: 20),
+                                        //     // splashColor: Colors.red,
+                                        //     onPressed: () {},
+                                        //   ),
+                                        // ),
+                                        // Expanded(
+                                        //   child: TableCellWidget.iconButtonCell(
+                                        //     // padding: EdgeInsets.fromLTRB(
+                                        //     //     38.4, 0.0, 20, 0.0),
+                                        //     iconScr: Icon(
+                                        //       Icons.edit_outlined,
+                                        //     ),
+                                        //     onPressed: () {},
+                                        //   ),
+                                        // ),
+                                        // Expanded(
+                                        //   child: TableCellWidget.iconButtonCell(
+                                        //     iconScr: Icon(
+                                        //       Icons.more_horiz,
+                                        //     ),
+                                        //     onPressed: () {},
+                                        //   ),
+                                        // ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
                           PermissionManagementApprovePage(),
+                          // Text('data2'),
                           Text('data3'),
                           Text('data4'),
                         ],

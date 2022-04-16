@@ -4,12 +4,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 class TableHeaderWidget extends HookWidget {
   final Map<int, TableColumnWidth> columnWidths;
   final List<dynamic> columnHeader;
-  final tableRow;
+  // final tableRow;
 
   const TableHeaderWidget({
     required this.columnWidths,
     required this.columnHeader,
-    this.tableRow,
+    // this.tableRow,
   });
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class TableHeaderWidget extends HookWidget {
               borderRadius: BorderRadius.all(Radius.circular(8)),
             ),
             children: tableChildren),
-        ...tableRow
+        // ...tableRow
       ],
     );
   }

@@ -4,7 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 class SearchBoxWidget extends HookWidget {
   final hintText;
 
-  final width;
+  // final width;
   final height;
 
   // final bool isError;
@@ -15,7 +15,7 @@ class SearchBoxWidget extends HookWidget {
   // final TextInputType? keyboardType;
   const SearchBoxWidget({
     required this.hintText,
-    this.width = 408 * 0.8,
+    // this.width = 408 * 0.8,
     this.height = 48 * 0.8,
 
     // this.isError = false,
@@ -29,7 +29,7 @@ class SearchBoxWidget extends HookWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(right: 20),
-      width: width,
+      // width: width,
       height: height,
       child: TextField(
         textAlignVertical: TextAlignVertical.center,
