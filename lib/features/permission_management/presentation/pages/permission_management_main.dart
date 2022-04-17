@@ -1,14 +1,16 @@
-// import 'package:auto_route/auto_route.dart';
-// import 'package:frontend_web_app/core/presentation/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend_web_app/core/presentation/widgets/account_cell_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/dropdown_box_widget.dart';
+import 'package:frontend_web_app/core/presentation/widgets/primary_Button_widget.dart';
+import 'package:frontend_web_app/core/presentation/widgets/primary_tab_bar_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/search_box_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/table_cell_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/table_header_widget.dart';
 import 'package:frontend_web_app/features/permission_management/presentation/pages/permission_management_approve.dart';
+import 'package:frontend_web_app/features/permission_management/presentation/pages/permission_management_block.dart';
+import 'package:frontend_web_app/features/permission_management/presentation/pages/permission_management_department.dart';
 
 class PermissionManagementMainPage extends HookWidget {
   @override
@@ -65,47 +67,15 @@ class PermissionManagementMainPage extends HookWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            height: 72 * 0.8,
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(
-                                        width: 1,
-                                        color: Colors.grey.shade300))),
-                            child: TabBar(
-                                onTap: (index) {
-                                  currentTab.value = index;
-                                },
-                                padding: EdgeInsets.symmetric(horizontal: 20),
-                                unselectedLabelStyle: Theme.of(context)
-                                    .primaryTextTheme
-                                    .subtitle1,
-                                unselectedLabelColor: Colors.grey,
-                                labelStyle: Theme.of(context)
-                                    .primaryTextTheme
-                                    .subtitle1,
-                                labelColor:
-                                    Theme.of(context).colorScheme.primary,
-                                labelPadding: EdgeInsets.symmetric(
-                                  vertical: 0,
-                                  horizontal: 20,
-                                ),
-                                indicatorColor:
-                                    Theme.of(context).colorScheme.primary,
-                                indicatorPadding:
-                                    EdgeInsets.symmetric(horizontal: 16),
-                                isScrollable: true,
-                                tabs: const [
-                                  Tab(text: 'สมาชิกทั้งหมด'),
-                                  Tab(text: 'อนุมัติผู้ใช้งาน'),
-                                  Tab(text: 'การบล็อกผู้ใช้งาน'),
-                                  Tab(text: 'จัดการแผนก'),
-                                ]),
-                          ),
-                        ),
+                    PrimaryTabBarWidget(
+                      onTap: (index) {
+                        currentTab.value = index;
+                      },
+                      tabs: const [
+                        Tab(text: 'สมาชิกทั้งหมด'),
+                        Tab(text: 'อนุมัติผู้ใช้งาน'),
+                        Tab(text: 'การบล็อกผู้ใช้งาน'),
+                        Tab(text: 'จัดการแผนก'),
                       ],
                     ),
                     Expanded(
@@ -175,29 +145,35 @@ class PermissionManagementMainPage extends HookWidget {
                                     Expanded(flex: 12, child: SizedBox()),
                                     Expanded(
                                         flex: 8,
-                                        child: Container(
-                                          // width: 192 * 0.8,
+                                        child: PrimaryButtonWidget(
+                                          onPressed: () {},
+                                          text: '+ เพิ่มผู้ใช้งาน',
                                           height: 48 * 0.8,
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              primary: Theme.of(context)
-                                                  .colorScheme
-                                                  .primaryContainer,
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(8)),
-                                              ),
-                                            ),
-                                            onPressed: (() {}),
-                                            child: Text(
-                                              '+ เพิ่มผู้ใช้งาน',
-                                              style: Theme.of(context)
-                                                  .primaryTextTheme
-                                                  .button,
-                                            ),
-                                          ),
-                                        ))
+                                        )
+                                        // Container(
+                                        //   // width: 192 * 0.8,
+                                        //   height: 48 * 0.8,
+                                        //   child: ElevatedButton(
+                                        //     style: ElevatedButton.styleFrom(
+                                        //       primary: Theme.of(context)
+                                        //           .colorScheme
+                                        //           .primaryContainer,
+                                        //       shape:
+                                        //           const RoundedRectangleBorder(
+                                        //         borderRadius: BorderRadius.all(
+                                        //             Radius.circular(8)),
+                                        //       ),
+                                        //     ),
+                                        //     onPressed: (() {}),
+                                        //     child: Text(
+                                        //       '+ เพิ่มผู้ใช้งาน',
+                                        //       style: Theme.of(context)
+                                        //           .primaryTextTheme
+                                        //           .button,
+                                        //     ),
+                                        //   ),
+                                        // )
+                                        )
                                   ],
                                 ),
                                 SizedBox(
@@ -240,7 +216,6 @@ class PermissionManagementMainPage extends HookWidget {
                                             onPressed: () {},
                                           ),
                                         ),
-
                                         Expanded(
                                           child: TableCellWidget.iconButtonCell(
                                             context: context,
@@ -251,37 +226,6 @@ class PermissionManagementMainPage extends HookWidget {
                                         SizedBox(
                                           width: 60,
                                         ),
-
-                                        // Material(
-                                        //   shape: const CircleBorder(),
-                                        //   // color: Colors.amber,
-                                        //   child: IconButton(
-                                        //     // padding: EdgeInsets.only(
-                                        //     //     left: 16, right: 16),
-                                        //     icon: Icon(Icons.play_arrow,
-                                        //         color: Colors.red, size: 20),
-                                        //     // splashColor: Colors.red,
-                                        //     onPressed: () {},
-                                        //   ),
-                                        // ),
-                                        // Expanded(
-                                        //   child: TableCellWidget.iconButtonCell(
-                                        //     // padding: EdgeInsets.fromLTRB(
-                                        //     //     38.4, 0.0, 20, 0.0),
-                                        //     iconScr: Icon(
-                                        //       Icons.edit_outlined,
-                                        //     ),
-                                        //     onPressed: () {},
-                                        //   ),
-                                        // ),
-                                        // Expanded(
-                                        //   child: TableCellWidget.iconButtonCell(
-                                        //     iconScr: Icon(
-                                        //       Icons.more_horiz,
-                                        //     ),
-                                        //     onPressed: () {},
-                                        //   ),
-                                        // ),
                                       ],
                                     ),
                                   ),
@@ -290,9 +234,12 @@ class PermissionManagementMainPage extends HookWidget {
                             ),
                           ),
                           PermissionManagementApprovePage(),
+                          PermissionManagementBlockPage(),
+                          PermissionManagementDepartmentPage(),
+
                           // Text('data2'),
-                          Text('data3'),
-                          Text('data4'),
+                          // Text('data3'),
+                          // Text('data4'),
                         ],
                       ),
                     ),

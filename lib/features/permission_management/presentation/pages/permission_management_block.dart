@@ -1,13 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:frontend_web_app/core/presentation/widgets/dropdown_box_widget.dart';
-import 'package:frontend_web_app/core/presentation/widgets/search_box_widget.dart';
-import 'package:frontend_web_app/core/presentation/widgets/table_header_widget.dart';
+import 'package:flutter/material.dart';
 
 import '../../../../core/presentation/widgets/account_cell_widget.dart';
-// import 'package:frontend_web_app/features/permission_management/presentation/pages/permission_management_approve.dart';
+import '../../../../core/presentation/widgets/dropdown_box_widget.dart';
+import '../../../../core/presentation/widgets/search_box_widget.dart';
+import '../../../../core/presentation/widgets/table_header_widget.dart';
 
-class PermissionManagementApprovePage extends HookWidget {
+class PermissionManagementBlockPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final roleDropdown = useState<String>('ทุกตำแหน่ง');
@@ -23,7 +22,7 @@ class PermissionManagementApprovePage extends HookWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              ' อนุมัติผู้ใช้งาน 2 บัญชี',
+              ' บัญชีที่ถูกบล็อก 2 บัญชี',
               style: Theme.of(context).primaryTextTheme.headline1,
             ),
             SizedBox(
@@ -81,15 +80,21 @@ class PermissionManagementApprovePage extends HookWidget {
                       height: 48 * 0.8,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          textStyle: Theme.of(context).primaryTextTheme.button,
-                          primary:
-                              Theme.of(context).colorScheme.primaryContainer,
+                          elevation: 0,
+                          primary: Theme.of(context).colorScheme.secondary,
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
                           ),
                         ),
                         onPressed: (() {}),
-                        child: Text('+ เพิ่มผู้ใช้งาน'),
+                        child: Text(
+                          'บล็อกผู้ใช้งาน',
+                          style: Theme.of(context)
+                              .primaryTextTheme
+                              .button!
+                              .copyWith(
+                                  color: Theme.of(context).colorScheme.primary),
+                        ),
                       ),
                     ))
               ],
@@ -122,62 +127,32 @@ class PermissionManagementApprovePage extends HookWidget {
               role: 'Super admin',
               department: 'Hardware Lab',
               phone: '096-904-3542',
-              action: Row(
-                children: [
-                  Expanded(
-                    flex: 60,
-                    child: Container(
-                      // color: Colors.amber,
-                      margin: EdgeInsets.only(left: 24),
-                      height: 40 * 0.8,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          primary: Theme.of(context).colorScheme.secondary,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                          ),
-                        ),
-                        onPressed: (() {}),
-                        child: Text(
-                          'อนุมัติ',
-                          style: Theme.of(context)
-                              .primaryTextTheme
-                              .button!
-                              .copyWith(
-                                  color: Theme.of(context).colorScheme.primary),
-                        ),
+              action: Expanded(
+                flex: 56,
+                child: Container(
+                  margin: EdgeInsets.only(left: 60, right: 38.4),
+                  height: 40 * 0.8,
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      elevation: 0,
+                      primary: Theme.of(context).colorScheme.primary,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 56,
-                    child: Container(
-                      margin: EdgeInsets.only(left: 16, right: 20),
-                      height: 40 * 0.8,
-                      child: OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          elevation: 0,
-                          primary: Theme.of(context).colorScheme.primary,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                          ),
-                        ),
-                        onPressed: (() {}),
-                        child: Text(
-                          'ลบ',
-                          style: Theme.of(context)
-                              .primaryTextTheme
-                              .button!
-                              .copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .primaryContainer),
-                        ),
-                      ),
+                    onPressed: (() {}),
+                    child: Text(
+                      'เลิกบล็อก',
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .button!
+                          .copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer),
                     ),
                   ),
-                ],
+                ),
               ),
             )
           ],
