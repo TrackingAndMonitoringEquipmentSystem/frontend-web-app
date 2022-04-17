@@ -7,13 +7,19 @@ class TableCellWidget {
   // const TableCellWidget({required this.text});
 
   static Widget textTableCell({
-    // required BuildContext context,
+    required BuildContext context,
     required String text,
+    color,
+    padding = const EdgeInsets.fromLTRB(38.4, 10, 0, 10),
   }) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(38.4, 10, 0.0, 10),
+      padding: padding,
       child: Text(
         text,
+        style: Theme.of(context)
+            .primaryTextTheme
+            .bodyText2!
+            .copyWith(color: color),
       ),
     );
   }

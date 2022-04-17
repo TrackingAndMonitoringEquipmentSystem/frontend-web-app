@@ -1,4 +1,3 @@
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_web_app/core/presentation/widgets/table_cell_widget.dart';
@@ -64,10 +63,14 @@ class AccoutCellWidget extends HookWidget {
                           ],
                         ),
                       ),
-                      TableCellWidget.textTableCell(text: email),
-                      TableCellWidget.textTableCell(text: role),
-                      TableCellWidget.textTableCell(text: department),
-                      TableCellWidget.textTableCell(text: phone),
+                      TableCellWidget.textTableCell(
+                          text: email, context: context),
+                      TableCellWidget.textTableCell(
+                          text: role, context: context),
+                      TableCellWidget.textTableCell(
+                          text: department, context: context),
+                      TableCellWidget.textTableCell(
+                          text: phone, context: context),
                       action
                     ]),
               ],
