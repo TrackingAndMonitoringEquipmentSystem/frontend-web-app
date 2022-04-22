@@ -4,16 +4,15 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 class TableHeaderWidget extends HookWidget {
   final Map<int, TableColumnWidth> columnWidths;
   final List<dynamic> columnHeader;
-  // final tableRow;
+  final padding;
 
   const TableHeaderWidget({
     required this.columnWidths,
     required this.columnHeader,
-    // this.tableRow,
+    this.padding = const EdgeInsets.fromLTRB(38.4, 10, 0.0, 10),
   });
   @override
   Widget build(BuildContext context) {
-    const padding = EdgeInsets.fromLTRB(38.4, 10, 0.0, 10);
     List<Widget> tableChildren = [];
     for (var i in columnHeader) {
       tableChildren.add(

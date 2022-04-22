@@ -4,7 +4,7 @@ import 'package:frontend_web_app/core/presentation/widgets/dropdown_box_widget.d
 import 'package:frontend_web_app/core/presentation/widgets/search_box_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/table_header_widget.dart';
 
-import '../../../../core/presentation/widgets/account_cell_widget.dart';
+import '../widgets/account_cell_widget.dart';
 // import 'package:frontend_web_app/features/permission_management/presentation/pages/permission_management_approve.dart';
 
 class PermissionManagementApprovePage extends HookWidget {

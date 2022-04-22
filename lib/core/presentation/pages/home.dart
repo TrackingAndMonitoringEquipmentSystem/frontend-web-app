@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-
 import 'package:frontend_web_app/core/presentation/routes/router.gr.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -16,6 +15,7 @@ class HomePage extends HookWidget {
     ];
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).colorScheme.surface,
         title: SvgPicture.asset(
           'assets/icons/core/svg/logo_with_toollo_icon_medium.svg',
