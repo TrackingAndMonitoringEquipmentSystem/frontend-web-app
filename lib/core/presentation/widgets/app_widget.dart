@@ -17,7 +17,7 @@ class AppWidget extends StatelessWidget {
         scaffoldBackgroundColor: const Color.fromRGBO(245, 244, 252, 1),
         colorScheme: theme.colorScheme.copyWith(
           primary: const Color.fromRGBO(85, 8, 182, 1),
-          primaryContainer: const Color.fromRGBO(25, 2, 54, 1),
+          primaryContainer: const Color.fromRGBO(34, 2, 78, 1),
           secondary: const Color.fromRGBO(241, 239, 255, 1),
           tertiary: const Color.fromRGBO(128, 36, 244, 1),
           surface: const Color.fromRGBO(254, 253, 255, 1),
@@ -55,7 +55,7 @@ class AppWidget extends StatelessWidget {
             fontFamily: 'Sarabun',
           ),
           caption: TextStyle(
-            color: Color.fromRGBO(51, 51, 51, 1),
+            color: Color.fromRGBO(158, 158, 158, 1),
             fontSize: 13,
             fontFamily: 'Sarabun',
           ),

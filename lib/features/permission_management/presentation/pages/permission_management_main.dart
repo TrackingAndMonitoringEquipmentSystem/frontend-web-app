@@ -1,7 +1,10 @@
+import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:frontend_web_app/core/presentation/widgets/account_cell_widget.dart';
+import 'package:frontend_web_app/core/presentation/routes/router.gr.dart';
+import 'package:frontend_web_app/features/permission_management/presentation/widgets/account_cell_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/dropdown_box_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/primary_Button_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/primary_tab_bar_widget.dart';
@@ -18,7 +21,6 @@ class PermissionManagementMainPage extends HookWidget {
     final currentTab = useState(0);
     final roleDropdown = useState<String>('ทุกตำแหน่ง');
     final departmentDropdown = useState<String>('ทุกแผนก');
-    print(MediaQuery.of(context).size.width);
 
     return DefaultTabController(
       length: 4,
@@ -58,7 +60,6 @@ class PermissionManagementMainPage extends HookWidget {
               //body
               child: Container(
                 margin: EdgeInsets.fromLTRB(38.4, 0.0, 38.4, 38.4),
-                // padding: EdgeInsets.symmetric(horizontal: 38.4),
                 decoration: BoxDecoration(
                   // color: Colors.amber,
                   color: Theme.of(context).colorScheme.surface,
@@ -146,34 +147,14 @@ class PermissionManagementMainPage extends HookWidget {
                                     Expanded(
                                         flex: 8,
                                         child: PrimaryButtonWidget(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            print('object');
+                                            AutoRouter.of(context).replaceAll(
+                                                [AddUserMainRoute()]);
+                                          },
                                           text: '+ เพิ่มผู้ใช้งาน',
                                           height: 48 * 0.8,
-                                        )
-                                        // Container(
-                                        //   // width: 192 * 0.8,
-                                        //   height: 48 * 0.8,
-                                        //   child: ElevatedButton(
-                                        //     style: ElevatedButton.styleFrom(
-                                        //       primary: Theme.of(context)
-                                        //           .colorScheme
-                                        //           .primaryContainer,
-                                        //       shape:
-                                        //           const RoundedRectangleBorder(
-                                        //         borderRadius: BorderRadius.all(
-                                        //             Radius.circular(8)),
-                                        //       ),
-                                        //     ),
-                                        //     onPressed: (() {}),
-                                        //     child: Text(
-                                        //       '+ เพิ่มผู้ใช้งาน',
-                                        //       style: Theme.of(context)
-                                        //           .primaryTextTheme
-                                        //           .button,
-                                        //     ),
-                                        //   ),
-                                        // )
-                                        )
+                                        ))
                                   ],
                                 ),
                                 SizedBox(
