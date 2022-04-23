@@ -75,10 +75,7 @@ class PermissionManagementDepartmentPage extends HookWidget {
                 5: FlexColumnWidth(6),
               },
               columnData: [
-                TableCellWidget.textTableCell(
-                  text: 'ESL',
-                  context: context,
-                ),
+                TableCellWidget.textTableCell(text: 'ESL', context: context),
                 TableCellWidget.textTableCell(text: '8', context: context),
                 TableCellWidget.textTableCell(
                     text: '20 ม.ค. 2022',

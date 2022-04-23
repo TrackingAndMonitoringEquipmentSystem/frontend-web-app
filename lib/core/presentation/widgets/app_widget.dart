@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_web_app/core/presentation/routes/router.gr.dart';
+import '../routes/router.gr.dart';
 
 class AppWidget extends StatelessWidget {
   final _appRouter = AppRouter();

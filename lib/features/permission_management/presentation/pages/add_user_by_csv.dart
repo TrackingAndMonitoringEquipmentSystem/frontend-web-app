@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:frontend_web_app/core/presentation/widgets/primary_Button_widget.dart';
+import 'package:frontend_web_app/core/presentation/widgets/primary_button_widget.dart';
 import 'package:frontend_web_app/features/permission_management/presentation/widgets/drag_target_widget.dart';
 
 class AddUserByCsvPage extends HookWidget {

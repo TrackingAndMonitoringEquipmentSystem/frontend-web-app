@@ -17,8 +17,6 @@ class DataTableTextWidget extends HookWidget {
   });
   @override
   Widget build(BuildContext context) {
-    //  const padding = EdgeInsets.fromLTRB(38.4, 10, 0.0, 10);
-
     return SingleChildScrollView(
       child: Container(
         height: MediaQuery.of(context).size.height - 426.4,

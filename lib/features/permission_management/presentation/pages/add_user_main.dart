@@ -1,17 +1,15 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:frontend_web_app/core/presentation/routes/router.gr.dart';
 import 'package:frontend_web_app/core/presentation/widgets/app_bar_widget.dart';
-import 'package:frontend_web_app/core/presentation/widgets/primary_Button_widget.dart';
+import 'package:frontend_web_app/core/presentation/widgets/primary_button_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/primary_tab_bar_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/table_cell_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/table_header_widget.dart';
 import 'package:frontend_web_app/features/permission_management/presentation/pages/add_user_by_csv.dart';
 
 class AddUserMainPage extends HookWidget {
-  // final index = useState<int>(1);
   @override
   Widget build(BuildContext context) {
     final currentTab = useState(0);
@@ -39,7 +37,7 @@ class AddUserMainPage extends HookWidget {
             ],
             onPressed: [
               () {
-                AutoRouter.of(context).replaceAll([HomeRoute()]);
+                AutoRouter.of(context).pop();
               },
             ]),
         //
@@ -257,7 +255,9 @@ class AddUserMainPage extends HookWidget {
                                 flex: 9,
                                 child: PrimaryButtonWidget(
                                     // width: 172.8,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      AutoRouter.of(context).push(HomeRoute());
+                                    },
                                     text: 'ยืนยันการเพิ่ม'),
                               )
                             ],
