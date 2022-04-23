@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter/src/widgets/framework.dart';
-// import 'package:flutter_hooks/flutter_hooks.dart';
 
 class TableCellWidget {
   static Widget textTableCell({
@@ -67,10 +65,12 @@ class TableCellWidget {
     required onChanged,
     height = 38.4,
     String hint = '',
+    margin = const EdgeInsets.only(left: 19.2),
+    padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
   }) {
     return Container(
-      margin: EdgeInsets.only(left: 19.2),
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+      margin: margin,
+      padding: padding,
       // width: width,
       height: height,
       decoration: BoxDecoration(

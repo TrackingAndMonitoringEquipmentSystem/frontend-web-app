@@ -10,14 +10,16 @@ class AppBarWidget extends HookWidget with PreferredSizeWidget {
   final String currentPath;
   final List<String> path;
   final List<void Function()> onPressed;
+  // final Widget body;
   const AppBarWidget({
     required this.path,
-    required this.currentPath,
-    required this.imgSrc,
-    required this.name,
-    required this.role,
-    required this.department,
     required this.onPressed,
+    required this.currentPath,
+    // required this.body,
+    this.imgSrc = 'assets/images/core/profile_image_small.jpg',
+    this.name = 'Saitan Kittibullungkul',
+    this.role = 'Super admin',
+    this.department = 'Hardware Lab',
   });
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);

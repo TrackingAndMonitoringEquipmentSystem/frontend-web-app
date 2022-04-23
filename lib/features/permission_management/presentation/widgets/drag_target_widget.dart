@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cross_file/cross_file.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import '../../../../core/presentation/widgets/primary_Button_widget.dart';
+import '../../../../core/presentation/widgets/primary_button_widget.dart';
 
 class DragTragetWidget extends HookWidget {
   final _list = useState<List<XFile>>([]);

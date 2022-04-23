@@ -1,20 +1,14 @@
-import 'package:auto_route/annotations.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:frontend_web_app/core/presentation/routes/router.gr.dart';
 import 'package:frontend_web_app/core/presentation/widgets/equipment_cell_widget.dart';
-import 'package:frontend_web_app/features/permission_management/presentation/widgets/account_cell_widget.dart';
+import 'package:frontend_web_app/features/locker_and_equipment/presentation/pages/locker_and_equipment_location.dart';
+import 'package:frontend_web_app/features/locker_and_equipment/presentation/pages/locker_and_equipment_locker.dart';
 import 'package:frontend_web_app/core/presentation/widgets/dropdown_box_widget.dart';
-import 'package:frontend_web_app/core/presentation/widgets/primary_Button_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/primary_tab_bar_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/search_box_widget.dart';
-import 'package:frontend_web_app/core/presentation/widgets/table_cell_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/table_header_widget.dart';
-import 'package:frontend_web_app/features/permission_management/presentation/pages/permission_management_approve.dart';
-import 'package:frontend_web_app/features/permission_management/presentation/pages/permission_management_block.dart';
-import 'package:frontend_web_app/features/permission_management/presentation/pages/permission_management_department.dart';
+import 'package:frontend_web_app/features/locker_and_equipment/presentation/pages/locker_and_equipment_type.dart';
 
 class LockerAndEquipmentMainPage extends HookWidget {
   @override
@@ -74,7 +68,7 @@ class LockerAndEquipmentMainPage extends HookWidget {
                       },
                       tabs: const [
                         Tab(text: 'อุปกรณ์ทั้งหมด'),
-                        Tab(text: 'ตู้ล็อกเกอร์'),
+                        Tab(text: 'ตู้ล็อคเกอร์'),
                         Tab(text: 'จัดการสถานที่'),
                         Tab(text: 'จัดการหมวดหมู่'),
                       ],
@@ -162,7 +156,7 @@ class LockerAndEquipmentMainPage extends HookWidget {
                                     'Mac address',
                                     'ระยะการยืม',
                                     'หมวดหมู่',
-                                    'ตู้ล็อกเกอร์',
+                                    'ตู้ล็อคเกอร์',
                                     'สถานะ',
                                     'แก้ไขล่าสุด',
                                   ],
@@ -182,13 +176,9 @@ class LockerAndEquipmentMainPage extends HookWidget {
                               ],
                             ),
                           ),
-                          // PermissionManagementApprovePage(),
-                          // PermissionManagementBlockPage(),
-                          // PermissionManagementDepartmentPage(),
-
-                          Text('data2'),
-                          Text('data3'),
-                          Text('data4'),
+                          LockerAndEquipmentLockerPage(),
+                          LockerAndEquipmentLocationPage(),
+                          LockerAndEquipmentTypePage(),
                         ],
                       ),
                     ),
