@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:frontend_web_app/core/presentation/pages/home.dart';
 import 'package:frontend_web_app/core/presentation/routes/router.gr.dart';
 import 'package:frontend_web_app/core/presentation/widgets/app_bar_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/primary_button_widget.dart';
@@ -37,7 +38,9 @@ class AddUserMainPage extends HookWidget {
             ],
             onPressed: [
               () {
-                AutoRouter.of(context).pop();
+                AutoRouter.of(context).navigate(HomeRoute(
+                    currentTab: 0,
+                    children: [PermissionManagementMainRoute()]));
               },
             ]),
         //

@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:frontend_web_app/core/presentation/widgets/data_table_text_widget.dart';
+import 'package:frontend_web_app/core/presentation/widgets/dropdown_box_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/primary_button_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/table_cell_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/table_header_widget.dart';
 
-import '../../../../core/presentation/widgets/search_box_widget.dart';
-
-class LockerAndEquipmentTypePage extends HookWidget {
+class ManageLockerAndEquipmentLocationPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final locationDropdown = useState<String>('ทุกสถานที่ตั้ง');
     final columnWidths = <int, TableColumnWidth>{
-      0: FlexColumnWidth(22),
-      1: FlexColumnWidth(7),
-      2: FlexColumnWidth(7),
-      3: FlexColumnWidth(9),
-      4: FlexColumnWidth(9),
-      5: FlexColumnWidth(6),
+      0: FlexColumnWidth(6),
+      1: FlexColumnWidth(4),
+      2: FlexColumnWidth(9),
+      3: FlexColumnWidth(8),
+      4: FlexColumnWidth(7),
+      5: FlexColumnWidth(10),
+      6: FlexColumnWidth(10),
+      7: FlexColumnWidth(6),
     };
 
     return Container(
@@ -29,14 +31,22 @@ class LockerAndEquipmentTypePage extends HookWidget {
             children: [
               Expanded(
                 flex: 18,
-                child: SearchBoxWidget(hintText: 'ชื่อหมวดหมู่'),
+                child: DropdownBoxWidget(
+                  value: locationDropdown.value,
+                  items: <String>['ทุกสถานที่ตั้ง', '503, 5, ECC Building'],
+                  onChanged: (String? newValue) {
+                    if (newValue != null) {
+                      locationDropdown.value = newValue;
+                    }
+                  },
+                ),
               ),
               Expanded(flex: 34, child: SizedBox()),
               Expanded(
                   flex: 8,
                   child: PrimaryButtonWidget(
                     onPressed: () {},
-                    text: '+ เพิ่มหมวดหมู่',
+                    text: '+ เพิ่มสถานที่',
                     height: 48 * 0.8,
                   ))
             ],
@@ -47,8 +57,10 @@ class LockerAndEquipmentTypePage extends HookWidget {
           TableHeaderWidget(
             columnWidths: columnWidths,
             columnHeader: [
-              'ชื่อหมวดหมู่',
-              'จำนวนอุปกรณ์',
+              'ห้อง',
+              'ชั้น',
+              'อาคาร',
+              'จำนวนตู้ล็อกเกอร์',
               'แก้ไขล่าสุด',
               'แก้ไขโดย',
               'สร้างโดย',
@@ -58,9 +70,12 @@ class LockerAndEquipmentTypePage extends HookWidget {
           DataTableTextWidget(
               columnWidths: columnWidths,
               columnData: [
+                TableCellWidget.textTableCell(text: '503', context: context),
+                TableCellWidget.textTableCell(text: '5', context: context),
                 TableCellWidget.textTableCell(
-                    text: 'อุปกรณ์สำนักงาน', context: context),
-                TableCellWidget.textTableCell(text: '23', context: context),
+                    text: 'ECC Building', context: context),
+                TableCellWidget.textTableCell(
+                    text: '2 รายการ', context: context),
                 TableCellWidget.textTableCell(
                     text: '20 ม.ค. 2022',
                     context: context,

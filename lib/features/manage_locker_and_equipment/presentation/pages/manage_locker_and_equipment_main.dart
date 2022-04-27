@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend_web_app/core/presentation/widgets/equipment_cell_widget.dart';
-import 'package:frontend_web_app/features/locker_and_equipment/presentation/pages/locker_and_equipment_location.dart';
-import 'package:frontend_web_app/features/locker_and_equipment/presentation/pages/locker_and_equipment_locker.dart';
 import 'package:frontend_web_app/core/presentation/widgets/dropdown_box_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/primary_tab_bar_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/search_box_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/table_header_widget.dart';
-import 'package:frontend_web_app/features/locker_and_equipment/presentation/pages/locker_and_equipment_type.dart';
+import 'package:frontend_web_app/features/manage_locker_and_equipment/presentation/pages/manage_locker_and_equipment_location.dart';
+import 'package:frontend_web_app/features/manage_locker_and_equipment/presentation/pages/manage_locker_and_equipment_locker.dart';
+import 'package:frontend_web_app/features/manage_locker_and_equipment/presentation/pages/manage_locker_and_equipment_type.dart';
 
-class LockerAndEquipmentMainPage extends HookWidget {
+class ManageLockerAndEquipmentMainPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final currentTab = useState(0);
@@ -176,9 +176,9 @@ class LockerAndEquipmentMainPage extends HookWidget {
                               ],
                             ),
                           ),
-                          LockerAndEquipmentLockerPage(),
-                          LockerAndEquipmentLocationPage(),
-                          LockerAndEquipmentTypePage(),
+                          ManageLockerAndEquipmentLockerPage(),
+                          ManageLockerAndEquipmentLocationPage(),
+                          ManageLockerAndEquipmentTypePage(),
                         ],
                       ),
                     ),

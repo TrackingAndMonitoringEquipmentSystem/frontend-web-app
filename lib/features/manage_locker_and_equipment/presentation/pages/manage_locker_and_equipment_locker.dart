@@ -9,7 +9,7 @@ import 'package:frontend_web_app/core/presentation/widgets/search_box_widget.dar
 import 'package:frontend_web_app/core/presentation/widgets/table_cell_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/table_header_widget.dart';
 
-class LockerAndEquipmentLockerPage extends HookWidget {
+class ManageLockerAndEquipmentLockerPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final departmentDropdown = useState<String>('ทุกแผนก');

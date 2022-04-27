@@ -12,16 +12,13 @@ class AddLockerPage extends HookWidget {
     return Scaffold(
       appBar: AppBarWidget(
         path: ['ตู้และอุปกรณ์'],
-        currentPath: 'เพิ่มตู้ล็อกเกอร์',
-        imgSrc: 'assets/images/core/profile_image_small.jpg',
-        name: 'Saitan Kittibullungkul',
-        role: 'Super admin',
-        department: 'Hardware Lab',
         onPressed: [
           () {
-            // AutoRouter.of(context).pop();
+            AutoRouter.of(context).navigate(
+                HomeRoute(children: [ManageLockerAndEquipmentMainRoute()]));
           }
         ],
+        currentPath: 'เพิ่มตู้ล็อกเกอร์',
       ),
       body: Container(
           margin: EdgeInsets.fromLTRB(364.8, 24, 364.8, 38.4),

@@ -11,18 +11,29 @@ class EquipmentCellWidget extends HookWidget {
   final String lockerName, lockerId;
   final String status;
   final String editDate, editBy;
+  final columnWidths;
 
-  const EquipmentCellWidget(
-      {required this.imgSrc,
-      required this.equipmentName,
-      required this.macAddress,
-      required this.duration,
-      required this.type,
-      required this.lockerName,
-      required this.lockerId,
-      required this.status,
-      required this.editDate,
-      required this.editBy});
+  const EquipmentCellWidget({
+    required this.imgSrc,
+    required this.equipmentName,
+    required this.macAddress,
+    required this.duration,
+    required this.type,
+    required this.lockerName,
+    required this.lockerId,
+    required this.status,
+    required this.editDate,
+    required this.editBy,
+    this.columnWidths = const <int, TableColumnWidth>{
+      0: FlexColumnWidth(11),
+      1: FlexColumnWidth(9),
+      2: FlexColumnWidth(6),
+      3: FlexColumnWidth(7),
+      4: FlexColumnWidth(8),
+      5: FlexColumnWidth(7),
+      6: FlexColumnWidth(12),
+    },
+  });
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -33,15 +44,7 @@ class EquipmentCellWidget extends HookWidget {
           children: [
             Table(
               defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-              columnWidths: <int, TableColumnWidth>{
-                0: FlexColumnWidth(11),
-                1: FlexColumnWidth(9),
-                2: FlexColumnWidth(6),
-                3: FlexColumnWidth(7),
-                4: FlexColumnWidth(8),
-                5: FlexColumnWidth(7),
-                6: FlexColumnWidth(12),
-              },
+              columnWidths: columnWidths,
               children: [
                 TableRow(
                     decoration: BoxDecoration(

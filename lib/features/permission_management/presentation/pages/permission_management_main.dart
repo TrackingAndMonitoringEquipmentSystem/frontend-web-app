@@ -147,7 +147,7 @@ class PermissionManagementMainPage extends HookWidget {
                                         flex: 8,
                                         child: PrimaryButtonWidget(
                                           onPressed: () {
-                                            // print('object');
+                                            print('object');
                                             AutoRouter.of(context)
                                                 .push(AddUserMainRoute());
                                           },

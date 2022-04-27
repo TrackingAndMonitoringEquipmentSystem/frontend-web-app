@@ -3,16 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:frontend_web_app/core/presentation/routes/router.gr.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend_web_app/features/authentication/domain/repositories/authentication_repository.dart';
+import 'package:frontend_web_app/features/authentication/domain/value_objects/value_objects.dart';
+import 'package:frontend_web_app/injection.dart';
 
 class HomePage extends HookWidget {
+  final int? currentTab;
+
+  HomePage({this.currentTab});
+
   @override
   Widget build(BuildContext context) {
-    final state = useState(0);
+    final state = useState(currentTab ?? 0);
     final _routes = [
       PermissionManagementMainRoute(),
-      LockerAndEquipmentMainRoute(),
+      ManageLockerAndEquipmentMainRoute(),
       StreamingAndRecordMainRoute(),
+      RepairReportMainRoute()
     ];
+    // final authenticationRepository = getIt<AuthenticationRepository>();
+    // authenticationRepository.signInWithEmailAndPassword(emailAddress: EmailAddress(''));
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -99,6 +109,7 @@ class HomePage extends HookWidget {
                         press: () {
                           AutoRouter.of(context).replace(_routes[0]);
                           state.value = 0;
+                          print('state : ' + state.value.toString());
                         },
                       ),
                       drawerListTile(
@@ -108,7 +119,9 @@ class HomePage extends HookWidget {
                         svgSrc: 'assets/icons/core/svg/locker_icon_small.svg',
                         press: () {
                           AutoRouter.of(context).replace(_routes[1]);
+
                           state.value = 1;
+                          print('state : ' + state.value.toString());
                         },
                       ),
                       drawerListTile(
@@ -118,7 +131,9 @@ class HomePage extends HookWidget {
                         svgSrc: 'assets/icons/core/svg/camera_icon_small.svg',
                         press: () {
                           AutoRouter.of(context).replace(_routes[2]);
+
                           state.value = 2;
+                          print('state : ' + state.value.toString());
                         },
                       ),
                       drawerListTile(
@@ -128,19 +143,11 @@ class HomePage extends HookWidget {
                         svgSrc: 'assets/icons/core/svg/tool_icon_small.svg',
                         press: () {
                           AutoRouter.of(context).replace(_routes[3]);
+
                           state.value = 3;
+                          print('state : ' + state.value.toString());
                         },
                       ),
-                      drawerListTile(
-                        context: context,
-                        isActive: 4 == state.value,
-                        title: 'การแจ้งปัญหา',
-                        svgSrc: 'assets/icons/core/svg/report_icon_small.svg',
-                        press: () {
-                          // AutoRouter.of(context).replace(_routes[4]);
-                          state.value = 4;
-                        },
-                      )
                     ],
                   ),
                 ),
