@@ -5,8 +5,10 @@ class OutlineButtonWidget extends HookWidget {
   final text;
   final margin;
   final double height;
+  final void Function() onPressed;
   const OutlineButtonWidget({
     required this.text,
+    required this.onPressed,
     this.margin = const EdgeInsets.only(left: 16, right: 20),
     this.height = 38.4,
   });
@@ -24,7 +26,7 @@ class OutlineButtonWidget extends HookWidget {
             borderRadius: BorderRadius.all(Radius.circular(8)),
           ),
         ),
-        onPressed: (() {}),
+        onPressed: onPressed,
         child: Text(
           text,
           style: Theme.of(context)
