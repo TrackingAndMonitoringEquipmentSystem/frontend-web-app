@@ -20,6 +20,7 @@ mixin _$Room {
   String get name => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
+  List<Locker>? get lockers => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $RoomCopyWith<Room> get copyWith => throw _privateConstructorUsedError;
@@ -29,7 +30,12 @@ mixin _$Room {
 abstract class $RoomCopyWith<$Res> {
   factory $RoomCopyWith(Room value, $Res Function(Room) then) =
       _$RoomCopyWithImpl<$Res>;
-  $Res call({int id, String name, DateTime createdAt, DateTime updatedAt});
+  $Res call(
+      {int id,
+      String name,
+      DateTime createdAt,
+      DateTime updatedAt,
+      List<Locker>? lockers});
 }
 
 /// @nodoc
@@ -46,6 +52,7 @@ class _$RoomCopyWithImpl<$Res> implements $RoomCopyWith<$Res> {
     Object? name = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? lockers = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -64,6 +71,10 @@ class _$RoomCopyWithImpl<$Res> implements $RoomCopyWith<$Res> {
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      lockers: lockers == freezed
+          ? _value.lockers
+          : lockers // ignore: cast_nullable_to_non_nullable
+              as List<Locker>?,
     ));
   }
 }
@@ -73,7 +84,12 @@ abstract class _$RoomCopyWith<$Res> implements $RoomCopyWith<$Res> {
   factory _$RoomCopyWith(_Room value, $Res Function(_Room) then) =
       __$RoomCopyWithImpl<$Res>;
   @override
-  $Res call({int id, String name, DateTime createdAt, DateTime updatedAt});
+  $Res call(
+      {int id,
+      String name,
+      DateTime createdAt,
+      DateTime updatedAt,
+      List<Locker>? lockers});
 }
 
 /// @nodoc
@@ -91,6 +107,7 @@ class __$RoomCopyWithImpl<$Res> extends _$RoomCopyWithImpl<$Res>
     Object? name = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? lockers = freezed,
   }) {
     return _then(_Room(
       id: id == freezed
@@ -109,6 +126,10 @@ class __$RoomCopyWithImpl<$Res> extends _$RoomCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      lockers: lockers == freezed
+          ? _value.lockers
+          : lockers // ignore: cast_nullable_to_non_nullable
+              as List<Locker>?,
     ));
   }
 }
@@ -120,7 +141,9 @@ class _$_Room implements _Room {
       {required this.id,
       required this.name,
       required this.createdAt,
-      required this.updatedAt});
+      required this.updatedAt,
+      required final List<Locker>? lockers})
+      : _lockers = lockers;
 
   @override
   final int id;
@@ -130,10 +153,18 @@ class _$_Room implements _Room {
   final DateTime createdAt;
   @override
   final DateTime updatedAt;
+  final List<Locker>? _lockers;
+  @override
+  List<Locker>? get lockers {
+    final value = _lockers;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'Room(id: $id, name: $name, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Room(id: $id, name: $name, createdAt: $createdAt, updatedAt: $updatedAt, lockers: $lockers)';
   }
 
   @override
@@ -144,7 +175,8 @@ class _$_Room implements _Room {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
-            const DeepCollectionEquality().equals(other.updatedAt, updatedAt));
+            const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
+            const DeepCollectionEquality().equals(other.lockers, lockers));
   }
 
   @override
@@ -153,7 +185,8 @@ class _$_Room implements _Room {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(createdAt),
-      const DeepCollectionEquality().hash(updatedAt));
+      const DeepCollectionEquality().hash(updatedAt),
+      const DeepCollectionEquality().hash(lockers));
 
   @JsonKey(ignore: true)
   @override
@@ -166,7 +199,8 @@ abstract class _Room implements Room {
       {required final int id,
       required final String name,
       required final DateTime createdAt,
-      required final DateTime updatedAt}) = _$_Room;
+      required final DateTime updatedAt,
+      required final List<Locker>? lockers}) = _$_Room;
 
   @override
   int get id => throw _privateConstructorUsedError;
@@ -176,6 +210,8 @@ abstract class _Room implements Room {
   DateTime get createdAt => throw _privateConstructorUsedError;
   @override
   DateTime get updatedAt => throw _privateConstructorUsedError;
+  @override
+  List<Locker>? get lockers => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$RoomCopyWith<_Room> get copyWith => throw _privateConstructorUsedError;

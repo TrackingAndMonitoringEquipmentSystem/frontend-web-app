@@ -27,7 +27,8 @@ mixin _$UserType {
   String? get profilePicUrl => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
-  Department? get department => throw _privateConstructorUsedError;
+  Department get department => throw _privateConstructorUsedError;
+  Role get role => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserTypeCopyWith<UserType> get copyWith =>
@@ -50,9 +51,10 @@ abstract class $UserTypeCopyWith<$Res> {
       String? profilePicUrl,
       DateTime createdAt,
       DateTime updatedAt,
-      Department? department});
+      Department department,
+      Role role});
 
-  $DepartmentCopyWith<$Res>? get department;
+  $DepartmentCopyWith<$Res> get department;
 }
 
 /// @nodoc
@@ -77,6 +79,7 @@ class _$UserTypeCopyWithImpl<$Res> implements $UserTypeCopyWith<$Res> {
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? department = freezed,
+    Object? role = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -126,17 +129,17 @@ class _$UserTypeCopyWithImpl<$Res> implements $UserTypeCopyWith<$Res> {
       department: department == freezed
           ? _value.department
           : department // ignore: cast_nullable_to_non_nullable
-              as Department?,
+              as Department,
+      role: role == freezed
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as Role,
     ));
   }
 
   @override
-  $DepartmentCopyWith<$Res>? get department {
-    if (_value.department == null) {
-      return null;
-    }
-
-    return $DepartmentCopyWith<$Res>(_value.department!, (value) {
+  $DepartmentCopyWith<$Res> get department {
+    return $DepartmentCopyWith<$Res>(_value.department, (value) {
       return _then(_value.copyWith(department: value));
     });
   }
@@ -159,10 +162,11 @@ abstract class _$UserCopyWith<$Res> implements $UserTypeCopyWith<$Res> {
       String? profilePicUrl,
       DateTime createdAt,
       DateTime updatedAt,
-      Department? department});
+      Department department,
+      Role role});
 
   @override
-  $DepartmentCopyWith<$Res>? get department;
+  $DepartmentCopyWith<$Res> get department;
 }
 
 /// @nodoc
@@ -188,6 +192,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserTypeCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? department = freezed,
+    Object? role = freezed,
   }) {
     return _then(_User(
       id: id == freezed
@@ -237,7 +242,11 @@ class __$UserCopyWithImpl<$Res> extends _$UserTypeCopyWithImpl<$Res>
       department: department == freezed
           ? _value.department
           : department // ignore: cast_nullable_to_non_nullable
-              as Department?,
+              as Department,
+      role: role == freezed
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as Role,
     ));
   }
 }
@@ -257,7 +266,8 @@ class _$_User implements _User {
       required this.profilePicUrl,
       required this.createdAt,
       required this.updatedAt,
-      required this.department});
+      required this.department,
+      required this.role});
 
   @override
   final int id;
@@ -282,11 +292,13 @@ class _$_User implements _User {
   @override
   final DateTime updatedAt;
   @override
-  final Department? department;
+  final Department department;
+  @override
+  final Role role;
 
   @override
   String toString() {
-    return 'UserType(id: $id, firstName: $firstName, lastName: $lastName, email: $email, tel: $tel, providerId: $providerId, gender: $gender, faceIdUrl: $faceIdUrl, profilePicUrl: $profilePicUrl, createdAt: $createdAt, updatedAt: $updatedAt, department: $department)';
+    return 'UserType(id: $id, firstName: $firstName, lastName: $lastName, email: $email, tel: $tel, providerId: $providerId, gender: $gender, faceIdUrl: $faceIdUrl, profilePicUrl: $profilePicUrl, createdAt: $createdAt, updatedAt: $updatedAt, department: $department, role: $role)';
   }
 
   @override
@@ -308,7 +320,8 @@ class _$_User implements _User {
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
             const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
             const DeepCollectionEquality()
-                .equals(other.department, department));
+                .equals(other.department, department) &&
+            const DeepCollectionEquality().equals(other.role, role));
   }
 
   @override
@@ -325,7 +338,8 @@ class _$_User implements _User {
       const DeepCollectionEquality().hash(profilePicUrl),
       const DeepCollectionEquality().hash(createdAt),
       const DeepCollectionEquality().hash(updatedAt),
-      const DeepCollectionEquality().hash(department));
+      const DeepCollectionEquality().hash(department),
+      const DeepCollectionEquality().hash(role));
 
   @JsonKey(ignore: true)
   @override
@@ -346,7 +360,8 @@ abstract class _User implements UserType {
       required final String? profilePicUrl,
       required final DateTime createdAt,
       required final DateTime updatedAt,
-      required final Department? department}) = _$_User;
+      required final Department department,
+      required final Role role}) = _$_User;
 
   @override
   int get id => throw _privateConstructorUsedError;
@@ -371,7 +386,9 @@ abstract class _User implements UserType {
   @override
   DateTime get updatedAt => throw _privateConstructorUsedError;
   @override
-  Department? get department => throw _privateConstructorUsedError;
+  Department get department => throw _privateConstructorUsedError;
+  @override
+  Role get role => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;

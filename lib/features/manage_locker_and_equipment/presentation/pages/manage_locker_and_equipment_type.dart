@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:frontend_web_app/features/permission_management/presentation/widgets/alert_dialog_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/data_table_text_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/primary_button_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/table_cell_widget.dart';
@@ -21,7 +22,7 @@ class ManageLockerAndEquipmentTypePage extends HookWidget {
 
     return Container(
       // color: Colors.red,
-      padding: EdgeInsets.symmetric(horizontal: 38.4, vertical: 24),
+      padding: EdgeInsets.fromLTRB(38.4, 24, 38.4, 0.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -35,9 +36,9 @@ class ManageLockerAndEquipmentTypePage extends HookWidget {
               Expanded(
                   flex: 8,
                   child: PrimaryButtonWidget(
-                    onPressed: () {},
                     text: '+ เพิ่มหมวดหมู่',
                     height: 48 * 0.8,
+                    onPressed: () {},
                   ))
             ],
           ),
@@ -55,28 +56,29 @@ class ManageLockerAndEquipmentTypePage extends HookWidget {
               ''
             ],
           ),
-          DataTableTextWidget(
-              columnWidths: columnWidths,
-              columnData: [
-                TableCellWidget.textTableCell(
-                    text: 'อุปกรณ์สำนักงาน', context: context),
-                TableCellWidget.textTableCell(text: '23', context: context),
-                TableCellWidget.textTableCell(
-                    text: '20 ม.ค. 2022',
-                    context: context,
-                    color: Colors.grey.shade400),
-                TableCellWidget.textTableCell(
-                    text: 'Saitan Kittibullungkul',
-                    context: context,
-                    color: Colors.grey.shade400),
-                TableCellWidget.textTableCell(
-                  text: '1 ม.ค. 2022\nSaitan Kittibullungkul',
+          DataTableTextWidget(columnWidths: columnWidths, columnData: [
+            [
+              TableCellWidget.textTableCell(
+                  text: 'อุปกรณ์สำนักงาน', context: context),
+              TableCellWidget.textTableCell(text: '23', context: context),
+              TableCellWidget.textTableCell(
+                  text: '20 ม.ค. 2022',
                   context: context,
-                  color: Colors.grey.shade400,
-                  padding: EdgeInsets.fromLTRB(38.4, 12, 0, 12),
-                ),
-              ],
-              onPressed: () {}),
+                  color: Colors.grey.shade400),
+              TableCellWidget.textTableCell(
+                  text: 'Saitan Kittibullungkul',
+                  context: context,
+                  color: Colors.grey.shade400),
+              TableCellWidget.textTableCell(
+                text: '1 ม.ค. 2022\nSaitan Kittibullungkul',
+                context: context,
+                color: Colors.grey.shade400,
+                padding: EdgeInsets.fromLTRB(38.4, 12, 0, 12),
+              ),
+            ]
+          ], onPressed: [
+            () {}
+          ]),
         ],
       ),
     );

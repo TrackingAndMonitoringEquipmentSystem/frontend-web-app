@@ -21,10 +21,10 @@ mixin _$Equipment {
   String get name => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
   String get picUrl => throw _privateConstructorUsedError;
-  int get duration => throw _privateConstructorUsedError;
+  int? get duration => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   DateTime get updatedAt => throw _privateConstructorUsedError;
-  Locker? get locker => throw _privateConstructorUsedError;
+  Locker get locker => throw _privateConstructorUsedError;
   UserType get createdBy => throw _privateConstructorUsedError;
   UserType get updatedBy => throw _privateConstructorUsedError;
   Map<String, dynamic>? get type => throw _privateConstructorUsedError;
@@ -47,10 +47,10 @@ abstract class $EquipmentCopyWith<$Res> {
       String name,
       String status,
       String picUrl,
-      int duration,
+      int? duration,
       DateTime createdAt,
       DateTime updatedAt,
-      Locker? locker,
+      Locker locker,
       UserType createdBy,
       UserType updatedBy,
       Map<String, dynamic>? type,
@@ -58,7 +58,7 @@ abstract class $EquipmentCopyWith<$Res> {
       List<dynamic>? repairs,
       List<dynamic>? reports});
 
-  $LockerCopyWith<$Res>? get locker;
+  $LockerCopyWith<$Res> get locker;
   $UserTypeCopyWith<$Res> get createdBy;
   $UserTypeCopyWith<$Res> get updatedBy;
 }
@@ -113,7 +113,7 @@ class _$EquipmentCopyWithImpl<$Res> implements $EquipmentCopyWith<$Res> {
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -125,7 +125,7 @@ class _$EquipmentCopyWithImpl<$Res> implements $EquipmentCopyWith<$Res> {
       locker: locker == freezed
           ? _value.locker
           : locker // ignore: cast_nullable_to_non_nullable
-              as Locker?,
+              as Locker,
       createdBy: createdBy == freezed
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
@@ -154,12 +154,8 @@ class _$EquipmentCopyWithImpl<$Res> implements $EquipmentCopyWith<$Res> {
   }
 
   @override
-  $LockerCopyWith<$Res>? get locker {
-    if (_value.locker == null) {
-      return null;
-    }
-
-    return $LockerCopyWith<$Res>(_value.locker!, (value) {
+  $LockerCopyWith<$Res> get locker {
+    return $LockerCopyWith<$Res>(_value.locker, (value) {
       return _then(_value.copyWith(locker: value));
     });
   }
@@ -191,10 +187,10 @@ abstract class _$EquipmentCopyWith<$Res> implements $EquipmentCopyWith<$Res> {
       String name,
       String status,
       String picUrl,
-      int duration,
+      int? duration,
       DateTime createdAt,
       DateTime updatedAt,
-      Locker? locker,
+      Locker locker,
       UserType createdBy,
       UserType updatedBy,
       Map<String, dynamic>? type,
@@ -203,7 +199,7 @@ abstract class _$EquipmentCopyWith<$Res> implements $EquipmentCopyWith<$Res> {
       List<dynamic>? reports});
 
   @override
-  $LockerCopyWith<$Res>? get locker;
+  $LockerCopyWith<$Res> get locker;
   @override
   $UserTypeCopyWith<$Res> get createdBy;
   @override
@@ -261,7 +257,7 @@ class __$EquipmentCopyWithImpl<$Res> extends _$EquipmentCopyWithImpl<$Res>
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -273,7 +269,7 @@ class __$EquipmentCopyWithImpl<$Res> extends _$EquipmentCopyWithImpl<$Res>
       locker: locker == freezed
           ? _value.locker
           : locker // ignore: cast_nullable_to_non_nullable
-              as Locker?,
+              as Locker,
       createdBy: createdBy == freezed
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
@@ -337,13 +333,13 @@ class _$_Equipment implements _Equipment {
   @override
   final String picUrl;
   @override
-  final int duration;
+  final int? duration;
   @override
   final DateTime createdAt;
   @override
   final DateTime updatedAt;
   @override
-  final Locker? locker;
+  final Locker locker;
   @override
   final UserType createdBy;
   @override
@@ -444,10 +440,10 @@ abstract class _Equipment implements Equipment {
       required final String name,
       required final String status,
       required final String picUrl,
-      required final int duration,
+      required final int? duration,
       required final DateTime createdAt,
       required final DateTime updatedAt,
-      required final Locker? locker,
+      required final Locker locker,
       required final UserType createdBy,
       required final UserType updatedBy,
       required final Map<String, dynamic>? type,
@@ -466,13 +462,13 @@ abstract class _Equipment implements Equipment {
   @override
   String get picUrl => throw _privateConstructorUsedError;
   @override
-  int get duration => throw _privateConstructorUsedError;
+  int? get duration => throw _privateConstructorUsedError;
   @override
   DateTime get createdAt => throw _privateConstructorUsedError;
   @override
   DateTime get updatedAt => throw _privateConstructorUsedError;
   @override
-  Locker? get locker => throw _privateConstructorUsedError;
+  Locker get locker => throw _privateConstructorUsedError;
   @override
   UserType get createdBy => throw _privateConstructorUsedError;
   @override

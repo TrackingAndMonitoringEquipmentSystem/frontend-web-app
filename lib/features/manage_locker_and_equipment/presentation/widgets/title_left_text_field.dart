@@ -6,12 +6,14 @@ import '../../../../core/presentation/widgets/table_cell_widget.dart';
 class TitleLeftTextField extends HookWidget {
   final List<String> title;
   final List<String> hint;
+  final List<Function> onChanged;
   final titleMargin;
   final fieldMargin;
 
   const TitleLeftTextField({
     required this.title,
     required this.hint,
+    required this.onChanged,
     this.titleMargin = const EdgeInsets.only(top: 25.6),
     this.fieldMargin = const EdgeInsets.fromLTRB(38.4, 25.6, 182, 0.0),
   });
@@ -35,7 +37,10 @@ class TitleLeftTextField extends HookWidget {
             ),
           ),
           TableCellWidget.textFieldCell(
-              context: context, margin: fieldMargin, hintText: hint[i])
+              context: context,
+              margin: fieldMargin,
+              hintText: hint[i],
+              onChanged: onChanged[i])
         ]),
       );
     }

@@ -5,7 +5,7 @@ class TableCellWidget {
     required BuildContext context,
     required String text,
     color,
-    padding = const EdgeInsets.fromLTRB(38.4, 10, 0, 10),
+    padding = const EdgeInsets.fromLTRB(38.4, 14, 0, 14),
   }) {
     return Padding(
       padding: padding,
@@ -22,6 +22,7 @@ class TableCellWidget {
   static Widget textFieldCell({
     required context,
     required String hintText,
+    required final Function onChanged,
     margin = const EdgeInsets.fromLTRB(19.2, 10, 0, 10),
     height = 38.4,
   }) {
@@ -53,6 +54,9 @@ class TableCellWidget {
             // prefixIcon: const Icon(Icons.search),
           ),
           style: Theme.of(context).primaryTextTheme.bodyText2,
+          onChanged: (value) {
+            onChanged(value);
+          },
         ),
       ),
     );
@@ -60,9 +64,9 @@ class TableCellWidget {
 
   static Widget dropdownCell({
     required context,
-    required value,
-    required items,
-    required onChanged,
+    required String? value,
+    required List<String> items,
+    required void Function(String) onChanged,
     height = 38.4,
     String hint = '',
     margin = const EdgeInsets.only(left: 19.2),
@@ -78,7 +82,7 @@ class TableCellWidget {
         border: Border.all(color: Colors.grey.shade400),
       ),
       child: DropdownButtonHideUnderline(
-        child: DropdownButton(
+        child: DropdownButton<String>(
             menuMaxHeight: 160,
             borderRadius: BorderRadius.circular(8),
             isExpanded: true,
@@ -98,13 +102,13 @@ class TableCellWidget {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(
-                  value,
+                  value.split(':')[1],
                   style: Theme.of(context).primaryTextTheme.bodyText2,
                 ),
               );
             }).toList(),
             onChanged: (newValue) {
-              onChanged(newValue);
+              onChanged(newValue as String);
             }),
       ),
     );
@@ -135,7 +139,7 @@ class TableCellWidget {
       ),
       child: Icon(
         iconScr,
-        color: Colors.grey.shade500,
+        color: Colors.grey.shade400,
       ),
       onPressed: () {},
     );

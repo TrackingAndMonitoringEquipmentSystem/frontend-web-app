@@ -141,23 +141,28 @@ class StreamingAndRecordMainPage extends HookWidget {
                           DataTableTextWidget(
                               columnWidths: columnWidths,
                               columnData: [
-                                TableCellWidget.textTableCell(
-                                    text: 'Macbook Locker', context: context),
-                                TableCellWidget.textTableCell(
-                                    text: '1', context: context),
-                                TableCellWidget.textTableCell(
-                                    text: '5 รายการ', context: context),
-                                TableCellWidget.textTableCell(
-                                    text: 'ห้อง 504 ชั้น 5 ECC Building',
-                                    context: context),
-                                TableCellWidget.textTableCell(
-                                  text: '1 ม.ค. 2022\nSaitan Kittibullungkul',
-                                  context: context,
-                                  color: Colors.grey.shade400,
-                                  padding: EdgeInsets.fromLTRB(38.4, 12, 0, 12),
-                                ),
+                                [
+                                  TableCellWidget.textTableCell(
+                                      text: 'Macbook Locker', context: context),
+                                  TableCellWidget.textTableCell(
+                                      text: '1', context: context),
+                                  TableCellWidget.textTableCell(
+                                      text: '5 รายการ', context: context),
+                                  TableCellWidget.textTableCell(
+                                      text: 'ห้อง 504 ชั้น 5 ECC Building',
+                                      context: context),
+                                  TableCellWidget.textTableCell(
+                                    text: '1 ม.ค. 2022\nSaitan Kittibullungkul',
+                                    context: context,
+                                    color: Colors.grey.shade400,
+                                    padding:
+                                        EdgeInsets.fromLTRB(38.4, 12, 0, 12),
+                                  ),
+                                ]
                               ],
-                              onPressed: () {}),
+                              onPressed: [
+                                () {}
+                              ]),
                         ],
                       ),
                     ),

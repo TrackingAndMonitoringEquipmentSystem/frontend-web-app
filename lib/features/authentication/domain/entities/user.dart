@@ -19,27 +19,27 @@ class UserType with _$UserType {
     required String? profilePicUrl,
     required DateTime createdAt,
     required DateTime updatedAt,
-    required Department? department,
+    required Department department,
+    required Role role,
   }) = _User;
 
   @override
   factory UserType.fromJson(Map<String, dynamic> json) {
     return UserType(
-      id: json['id'] as int,
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
-      email: json['email'] as String,
-      tel: json['tel'] as String,
-      providerId:
-          json.containsKey('providerId') ? json['providerId'] as String : null,
-      gender: genderFromString(json['gender'] as String),
-      faceIdUrl: json['face_id'] as String,
-      profilePicUrl: json['profile_pic'] as String,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
-      department: json.containsKey('dept')
-          ? Department.fromJson(json['dept'] as Map<String, dynamic>)
-          : null,
-    );
+        id: json['id'] as int,
+        firstName: json['firstName'] as String,
+        lastName: json['lastName'] as String,
+        email: json['email'] as String,
+        tel: json['tel'] as String,
+        providerId: json.containsKey('providerId')
+            ? json['providerId'] as String
+            : null,
+        gender: genderFromString(json['gender'] as String),
+        faceIdUrl: json['face_id'] as String,
+        profilePicUrl: json['profile_pic'] as String,
+        createdAt: DateTime.parse(json['created_at'] as String),
+        updatedAt: DateTime.parse(json['updated_at'] as String),
+        department: Department.fromJson(json['dept'] as Map<String, dynamic>),
+        role: roleFromString((json['role'] as Map<String, dynamic>)['role']));
   }
 }

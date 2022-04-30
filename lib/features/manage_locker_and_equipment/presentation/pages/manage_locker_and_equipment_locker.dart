@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:frontend_web_app/core/domain/repositories/rest_failure.dart';
 import 'package:frontend_web_app/core/presentation/routes/router.gr.dart';
 import 'package:frontend_web_app/core/presentation/widgets/data_table_text_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/dropdown_box_widget.dart';
@@ -8,29 +10,58 @@ import 'package:frontend_web_app/core/presentation/widgets/primary_button_widget
 import 'package:frontend_web_app/core/presentation/widgets/search_box_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/table_cell_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/table_header_widget.dart';
+import 'package:frontend_web_app/features/manage_locker_and_equipment/domain/entities/locker.dart';
+import 'package:frontend_web_app/features/manage_locker_and_equipment/domain/repositories/locker-repository.dart';
+import 'package:frontend_web_app/injection.dart';
+import 'package:intl/intl.dart';
 
 class ManageLockerAndEquipmentLockerPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final lockers = useState(<Locker>[]);
+    final ValueNotifier<RestFailure?> restFailure = useState(null);
+    final isLoading = useState(false);
+
+    useEffect(
+      () {
+        Future<void>.microtask(() async {
+          try {
+            isLoading.value = true;
+            final result = await getIt<LockerRepository>().getAll();
+            isLoading.value = false;
+            print('result: $result');
+            result.fold(
+              (l) => restFailure.value = l,
+              (r) => lockers.value = r,
+            );
+          } catch (error) {
+            print('error: $error');
+          }
+        });
+        return null;
+      },
+      [],
+    );
+//
     final departmentDropdown = useState<String>('ทุกแผนก');
     final locationDropdown = useState<String>('ทุกสถานที่ตั้ง');
     final columnWidths = <int, TableColumnWidth>{
       0: FlexColumnWidth(13),
       1: FlexColumnWidth(11),
-      2: FlexColumnWidth(7),
-      3: FlexColumnWidth(13),
+      2: FlexColumnWidth(10),
+      3: FlexColumnWidth(10),
       4: FlexColumnWidth(10),
       5: FlexColumnWidth(6),
     };
 
     return Container(
       // color: Colors.red,
-      padding: EdgeInsets.symmetric(horizontal: 38.4, vertical: 24),
+      padding: EdgeInsets.fromLTRB(38.4, 24, 38.4, 0.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'ตู้ล็อกเกอร์ทั้งหมด 3 รายการ',
+            'ตู้ล็อกเกอร์ทั้งหมด ' + '${lockers.value.length}' + ' รายการ',
             style: Theme.of(context).primaryTextTheme.headline1,
           ),
           SizedBox(
@@ -93,30 +124,55 @@ class ManageLockerAndEquipmentLockerPage extends HookWidget {
             columnHeader: [
               'ชื่อตู้ล็อกเกอร์',
               'Locker ID',
-              'จำนวนอุปกรณ์',
-              'สถานที่ตั้ง',
+              'จำนวนกล้อง',
               'แก้ไขล่าสุด',
+              'สร้างเมื่อ',
               ' ',
             ],
           ),
-          DataTableTextWidget(
+          if (isLoading.value)
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                child: SpinKitThreeBounce(
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 16,
+                ),
+              ),
+            )
+          else
+            DataTableTextWidget(
               columnWidths: columnWidths,
               columnData: [
-                TableCellWidget.textTableCell(
-                    text: 'Macbook Locker', context: context),
-                TableCellWidget.textTableCell(text: '1', context: context),
-                TableCellWidget.textTableCell(
-                    text: '5 รายการ', context: context),
-                TableCellWidget.textTableCell(
-                    text: 'ห้อง 504 ชั้น 5 ECC Building', context: context),
-                TableCellWidget.textTableCell(
-                  text: '1 ม.ค. 2022\nSaitan Kittibullungkul',
-                  context: context,
-                  color: Colors.grey.shade400,
-                  padding: EdgeInsets.fromLTRB(38.4, 12, 0, 12),
-                ),
+                ...(lockers.value.map((e) {
+                  return [
+                    TableCellWidget.textTableCell(
+                        text: e.name, context: context),
+                    TableCellWidget.textTableCell(
+                        text: '${e.id}', context: context),
+                    TableCellWidget.textTableCell(
+                        text: '${e.totalCams} ตัว', context: context),
+                    TableCellWidget.textTableCell(
+                        text: DateFormat('dd/MM/yyyy\nHH:mm:ss')
+                            .format(e.updatedAt.toLocal()),
+                        color: Colors.grey.shade400,
+                        context: context),
+                    TableCellWidget.textTableCell(
+                      text: DateFormat('dd/MM/yyyy\nHH:mm:ss')
+                          .format(e.createdAt.toLocal()),
+                      context: context,
+                      color: Colors.grey.shade400,
+                      padding: EdgeInsets.fromLTRB(38.4, 12, 0, 12),
+                    ),
+                  ];
+                }))
               ],
-              onPressed: () {}),
+              onPressed: [
+                ...(lockers.value.map((e) {
+                  return () {};
+                }))
+              ],
+            ),
         ],
       ),
     );

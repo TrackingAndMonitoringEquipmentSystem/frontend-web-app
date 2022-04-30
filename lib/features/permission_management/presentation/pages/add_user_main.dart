@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:frontend_web_app/core/domain/repositories/rest_failure.dart';
 import 'package:frontend_web_app/core/presentation/pages/home.dart';
 import 'package:frontend_web_app/core/presentation/routes/router.gr.dart';
 import 'package:frontend_web_app/core/presentation/widgets/app_bar_widget.dart';
@@ -8,21 +9,54 @@ import 'package:frontend_web_app/core/presentation/widgets/primary_button_widget
 import 'package:frontend_web_app/core/presentation/widgets/primary_tab_bar_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/table_cell_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/table_header_widget.dart';
+import 'package:frontend_web_app/core/utils/enum.dart';
+import 'package:frontend_web_app/core/utils/helper.dart';
+import 'package:frontend_web_app/features/manage_locker_and_equipment/domain/entities/department.dart';
+import 'package:frontend_web_app/features/manage_locker_and_equipment/domain/repositories/department-repository.dart';
 import 'package:frontend_web_app/features/permission_management/presentation/pages/add_user_by_csv.dart';
+import 'package:frontend_web_app/injection.dart';
 
 class AddUserMainPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final currentTab = useState(0);
-    final roleDropdown = useState<String?>(null);
-    final departmentDropdown = useState<String?>(null);
+    final fireName = useState<String?>(null);
+    final lastName = useState<String?>(null);
+    final email = useState<String>('');
+    final tel = useState<String?>(null);
+    final departments = useState(<Department>[]);
+    final roles = useState(<Role>[]);
+    final departmentSelected = useState<String?>(null);
+    final roleSelected = useState<String?>(null);
+
+    final ValueNotifier<RestFailure?> restFailure = useState(null);
+    useEffect(
+      () {
+        Future<void>.microtask(() async {
+          try {
+            final departmentResult =
+                await getIt<DepartmentRepository>().getAll();
+
+            departmentResult.fold(
+              (l) => restFailure.value = l,
+              (r) => departments.value = r,
+            );
+          } catch (error) {
+            print('error departmentResult : $error');
+          }
+        });
+        return null;
+      },
+      [],
+    );
+
     final columnWidths = <int, TableColumnWidth>{
       0: FlexColumnWidth(3),
-      1: FlexColumnWidth(13),
-      2: FlexColumnWidth(13),
-      3: FlexColumnWidth(10),
-      4: FlexColumnWidth(10),
-      5: FlexColumnWidth(11),
+      1: FlexColumnWidth(8),
+      2: FlexColumnWidth(10),
+      3: FlexColumnWidth(11),
+      4: FlexColumnWidth(9),
+      5: FlexColumnWidth(9),
+      6: FlexColumnWidth(10),
     };
     return DefaultTabController(
       length: 2,
@@ -54,14 +88,10 @@ class AddUserMainPage extends HookWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              PrimaryTabBarWidget(
-                  onTap: (index) {
-                    currentTab.value = index;
-                  },
-                  tabs: [
-                    Tab(text: 'เพิ่มผู้ใช้งานใหม่'),
-                    Tab(text: 'เพิ่มผู้ใช้งานแบบชุด'),
-                  ]),
+              PrimaryTabBarWidget(onTap: (index) {}, tabs: [
+                Tab(text: 'เพิ่มผู้ใช้งานใหม่'),
+                Tab(text: 'เพิ่มผู้ใช้งานแบบชุด'),
+              ]),
               Expanded(
                   child: TabBarView(
                 children: [
@@ -96,7 +126,8 @@ class AddUserMainPage extends HookWidget {
                           columnWidths: columnWidths,
                           columnHeader: [
                             'ลำดับ',
-                            'ชื่อ - นามสกุล',
+                            'ชื่อจริง',
+                            'นามสกุล',
                             'อีเมล',
                             'ตำแหน่ง',
                             'แผนก',
@@ -131,47 +162,50 @@ class AddUserMainPage extends HookWidget {
                                           ),
                                           TableCellWidget.textFieldCell(
                                               context: context,
-                                              hintText: 'กรอกชื่อ - นามสกุล'),
+                                              hintText: 'กรอกชื่อจริง',
+                                              onChanged: () {}),
                                           TableCellWidget.textFieldCell(
                                               context: context,
-                                              hintText: 'กรอกอีเมล'),
+                                              hintText: 'กรอกนามสกุล',
+                                              onChanged: () {}),
+                                          TableCellWidget.textFieldCell(
+                                              context: context,
+                                              hintText: 'กรอกอีเมล',
+                                              onChanged: () {}),
                                           TableCellWidget.dropdownCell(
                                               context: context,
                                               hint: 'เลือกตำแหน่ง',
-                                              value: roleDropdown.value,
-                                              items: <String>[
-                                                'Super admin',
-                                                'Admin',
-                                                'Master maintainer',
-                                                'Maintainer'
+                                              value: roleSelected.value,
+                                              items: [
+                                                '1:Super admin',
+                                                '2:Admin',
+                                                '3:Master maintainer',
+                                                '4:Maintainer',
+                                                '5:User'
                                               ],
                                               onChanged: (newValue) {
-                                                if (newValue != null) {
-                                                  roleDropdown.value = newValue;
-                                                }
+                                                roleSelected.value = newValue;
                                               }),
                                           TableCellWidget.dropdownCell(
                                               context: context,
                                               hint: 'เลือกแผนก',
-                                              value: departmentDropdown.value,
-                                              items: <String>[
-                                                'ESL Lab',
-                                                'Hardware Lab',
-                                                'HCL Lab',
-                                                'ISAC Lab',
-                                                'Network Lab'
+                                              value: departmentSelected.value,
+                                              items: [
+                                                ...departments.value.map((e) =>
+                                                    e.id.toString() +
+                                                    ':' +
+                                                    e.name)
                                               ],
                                               onChanged: (newValue) {
-                                                if (newValue != null) {
-                                                  departmentDropdown.value =
-                                                      newValue;
-                                                }
+                                                departmentSelected.value =
+                                                    newValue;
                                               }),
                                           TableCellWidget.textFieldCell(
                                             context: context,
                                             hintText: 'เบอร์โทรศัพท์',
                                             margin: EdgeInsets.fromLTRB(
                                                 19.2, 10, 38.4, 10),
+                                            onChanged: () {},
                                           ),
                                         ]),
                                     TableRow(
@@ -198,6 +232,7 @@ class AddUserMainPage extends HookWidget {
                                                 child:
                                                     Text('+ เพิ่มผู้ใช้งาน')),
                                           ),
+                                          Text(' '),
                                           Text(' '),
                                           Text(' '),
                                           Text(' '),
@@ -259,7 +294,11 @@ class AddUserMainPage extends HookWidget {
                                 child: PrimaryButtonWidget(
                                     // width: 172.8,
                                     onPressed: () {
-                                      AutoRouter.of(context).push(HomeRoute());
+                                      AutoRouter.of(context).push(HomeRoute(
+                                          children: [
+                                            PermissionManagementMainRoute()
+                                          ],
+                                          currentTab: 0));
                                     },
                                     text: 'ยืนยันการเพิ่ม'),
                               )

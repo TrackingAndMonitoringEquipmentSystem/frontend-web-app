@@ -1,31 +1,74 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:frontend_web_app/core/presentation/pages/home.dart';
+import 'package:frontend_web_app/core/domain/repositories/rest_failure.dart';
 import 'package:frontend_web_app/core/presentation/routes/router.gr.dart';
 import 'package:frontend_web_app/core/presentation/widgets/outline_button_widget.dart';
 import 'package:frontend_web_app/core/presentation/widgets/primary_button_widget.dart';
+import 'package:frontend_web_app/features/manage_locker_and_equipment/domain/entities/building.dart';
+import 'package:frontend_web_app/features/manage_locker_and_equipment/domain/entities/department.dart';
+import 'package:frontend_web_app/features/manage_locker_and_equipment/domain/entities/floor.dart';
+import 'package:frontend_web_app/features/manage_locker_and_equipment/domain/repositories/department-repository.dart';
+import 'package:frontend_web_app/features/manage_locker_and_equipment/domain/repositories/locker-repository.dart';
 import 'package:frontend_web_app/features/manage_locker_and_equipment/presentation/widgets/title_left_dropdown_field.dart';
 import 'package:frontend_web_app/features/manage_locker_and_equipment/presentation/widgets/title_left_text_field.dart';
+import 'package:frontend_web_app/injection.dart';
 
 import '../../../../core/presentation/widgets/app_bar_widget.dart';
 
 class AddLockerFormPage extends HookWidget {
+  final int id;
+  const AddLockerFormPage({required this.id});
   @override
   Widget build(BuildContext context) {
-    final builingDropdown = useState<String?>(null);
-    final floorDropdown = useState<String?>(null);
-    final roomDropdown = useState<String?>(null);
-    final departmentDropdown = useState<String?>(null);
-    final accountDropdown = useState<String?>(null);
+    final name = useState('');
+    final description = useState('');
+    final buildings = useState(<Building>[]);
+    final buildingSelected = useState<String?>(null);
+    final floorSelected = useState<String?>(null);
+    final roomSelected = useState<String?>(null);
+    final departments = useState(<Department>[]);
+    final departmentSelected = useState<String?>(null);
+
+    final ValueNotifier<RestFailure?> restFailure = useState(null);
+    useEffect(
+      () {
+        Future<void>.microtask(() async {
+          try {
+            final departmentResult =
+                await getIt<DepartmentRepository>().getAll();
+
+            departmentResult.fold(
+              (l) => restFailure.value = l,
+              (r) => departments.value = r,
+            );
+          } catch (error) {
+            print('error departmentResult : $error');
+          }
+          try {
+            final locationResult =
+                await getIt<LockerRepository>().getBuildings();
+            locationResult.fold(
+              (l) => restFailure.value = l,
+              (r) => buildings.value = r,
+            );
+          } catch (error) {
+            print('error locationResult : $error');
+          }
+        });
+        return null;
+      },
+      [],
+    );
 
     return Scaffold(
       appBar: AppBarWidget(
         path: ['ตู้และอุปกรณ์', 'เพิ่มตู้ล็อกเกอร์'],
         onPressed: [
           () {
-            AutoRouter.of(context).navigate(
-                HomeRoute(children: [ManageLockerAndEquipmentMainRoute()]));
+            AutoRouter.of(context).navigate(HomeRoute(
+                children: [ManageLockerAndEquipmentMainRoute()],
+                currentTab: 1));
           },
           () {
             AutoRouter.of(context).navigate(AddLockerRoute());
@@ -58,7 +101,7 @@ class AddLockerFormPage extends HookWidget {
                               .primaryTextTheme
                               .bodyText1!
                               .copyWith(color: Colors.grey.shade500)),
-                      Text('1',
+                      Text(id.toString(),
                           style: Theme.of(context)
                               .primaryTextTheme
                               .bodyText1!
@@ -82,8 +125,17 @@ class AddLockerFormPage extends HookWidget {
                       style: Theme.of(context).primaryTextTheme.headline1,
                     ),
                     TitleLeftTextField(
-                        title: ['ชื่อตู้ล็อกเกอร์', 'คำอธิบาย'],
-                        hint: ['กรอกชื่อตู้ล็อกเกอร์', 'กรอกคำอธิบาย']),
+                      title: ['ชื่อตู้ล็อกเกอร์', 'คำอธิบาย'],
+                      hint: ['กรอกชื่อตู้ล็อกเกอร์', 'กรอกคำอธิบาย'],
+                      onChanged: [
+                        (value) {
+                          name.value = value;
+                        },
+                        (value) {
+                          description.value = value;
+                        }
+                      ],
+                    ),
                     SizedBox(height: 25.6),
                   ],
                 ),
@@ -111,22 +163,51 @@ class AddLockerFormPage extends HookWidget {
                       'เลือกชั้น',
                       'เลือกห้อง'
                     ], value: [
-                      builingDropdown.value,
-                      floorDropdown.value,
-                      roomDropdown.value,
+                      buildingSelected.value,
+                      floorSelected.value,
+                      roomSelected.value,
                     ], items: [
-                      ['ECC Building'],
-                      ['5'],
-                      ['503']
+                      [
+                        ...buildings.value
+                            .map((e) => e.id.toString() + ':' + e.name)
+                      ],
+                      if (buildingSelected.value != null)
+                        buildings.value
+                            .firstWhere((element) =>
+                                element.id ==
+                                int.parse(
+                                    buildingSelected.value!.split(':')[0]))
+                            .floors
+                            .map((e) => e.id.toString() + ':' + e.name)
+                            .toList()
+                      else
+                        <String>[],
+                      if (buildingSelected.value != null &&
+                          floorSelected.value != null)
+                        buildings.value
+                            .firstWhere((element) =>
+                                element.id ==
+                                int.parse(
+                                    buildingSelected.value!.split(':')[0]))
+                            .floors
+                            .firstWhere((element) =>
+                                element.id ==
+                                int.parse(floorSelected.value!.split(':')[0]))
+                            .rooms
+                            .map((e) => e.id.toString() + ':' + e.name)
+                            .toList()
+                      else
+                        <String>[],
                     ], onChanged: [
                       (newValue) {
-                        builingDropdown.value = newValue;
+                        buildingSelected.value = newValue;
                       },
                       (newValue) {
-                        floorDropdown.value = newValue;
+                        floorSelected.value = newValue;
                       },
                       (newValue) {
-                        roomDropdown.value = newValue;
+                        roomSelected.value = newValue;
+                        print(roomSelected.value);
                       },
                     ]),
                     SizedBox(height: 25.6),
@@ -149,28 +230,19 @@ class AddLockerFormPage extends HookWidget {
                     ),
                     TitleLeftDropdownField(title: [
                       'แผนก',
-                      'บัญชีผู้ใช้ (ถ้ามี)',
                     ], hint: [
                       'เลือกแผนก',
-                      'เลือกบัญชีผู้ใช้งาน',
                     ], value: [
-                      departmentDropdown.value,
-                      accountDropdown.value,
+                      departmentSelected.value,
                     ], items: [
                       [
-                        'ESL Lab',
-                        'Hardware Lab',
-                        'HCL Lab',
-                        'ISAC Lab',
-                        'Network Lab'
+                        ...departments.value
+                            .map((e) => e.id.toString() + ':' + e.name)
                       ],
-                      [],
                     ], onChanged: [
                       (newValue) {
-                        departmentDropdown.value = newValue;
-                      },
-                      (newValue) {
-                        accountDropdown.value = newValue;
+                        departmentSelected.value = newValue;
+                        print(departmentSelected.value);
                       },
                     ]),
                     SizedBox(height: 25.6),
@@ -187,17 +259,50 @@ class AddLockerFormPage extends HookWidget {
                       child: OutlineButtonWidget(
                         text: 'ยกเลิก',
                         margin: EdgeInsets.zero,
+                        onPressed: () {
+                          AutoRouter.of(context).navigate(HomeRoute(
+                              children: [ManageLockerAndEquipmentMainRoute()],
+                              currentTab: 1));
+                        },
                       ),
                     ),
                     Expanded(
                         flex: 10,
                         child: PrimaryButtonWidget(
-                          onPressed: () {
-                            AutoRouter.of(context).push(HomeRoute(
-                                currentTab: 1,
-                                children: [
-                                  ManageLockerAndEquipmentMainRoute()
-                                ]));
+                          onPressed: () async {
+                            final result =
+                                await getIt<LockerRepository>().registerLocker(
+                              id: id,
+                              name: name.value,
+                              description: description.value,
+                              departments: departments.value.firstWhere(
+                                  (element) =>
+                                      element.id ==
+                                      int.parse(departmentSelected.value!
+                                          .split(':')[0])),
+                              room: buildings.value
+                                  .firstWhere((element) =>
+                                      element.id ==
+                                      int.parse(buildingSelected.value!
+                                          .split(':')[0]))
+                                  .floors
+                                  .firstWhere((element) =>
+                                      element.id ==
+                                      int.parse(
+                                          floorSelected.value!.split(':')[0]))
+                                  .rooms
+                                  .firstWhere((element) =>
+                                      element.id ==
+                                      int.parse(
+                                          roomSelected.value!.split(':')[0])),
+                            );
+                            result.fold(
+                                (l) => null,
+                                (r) => AutoRouter.of(context).push(HomeRoute(
+                                        currentTab: 1,
+                                        children: [
+                                          ManageLockerAndEquipmentMainRoute()
+                                        ])));
                           },
                           text: 'บันทึก',
                           margin: EdgeInsets.only(left: 20),

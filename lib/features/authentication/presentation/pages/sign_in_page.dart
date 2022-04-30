@@ -1,10 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend_web_app/core/presentation/routes/router.gr.dart';
-import 'package:frontend_web_app/core/presentation/widgets/primary_button_widget.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:frontend_web_app/features/authentication/domain/repositories/authentication_repository.dart';
 import 'package:frontend_web_app/features/authentication/domain/value_objects/value_objects.dart';
@@ -17,6 +15,8 @@ class SignInPage extends HookWidget {
     // Size size = MediaQuery.of(context).size;
     final email = useState('');
     final password = useState('');
+    final isLoading = useState(false);
+    final authenticationRepository = getIt<AuthenticationRepository>();
     return Scaffold(
       body: Row(
         children: [
@@ -62,29 +62,6 @@ class SignInPage extends HookWidget {
                           ),
                           labelText: 'Password',
                         ),
-                        onSubmitted: (value) async {
-                          final result = await getIt<AuthenticationRepository>()
-                              .signInWithEmailAndPassword(
-                                  emailAddress: EmailAddress(email.value),
-                                  password: Password(password.value));
-                          result.fold(
-                              (l) => FlushbarHelper.createError(
-                                    message: l.map(
-                                      cancelledByUser: (_) => 'Cancelled',
-                                      serverError: (_) => 'Server Error',
-                                      emailAlreadyInUse: (_) =>
-                                          'Email already in use',
-                                      invalidEmailAndPasswordCombination: (_) =>
-                                          'Invalide email and password combination',
-                                      cantSendVerifyEmail: (_) =>
-                                          'Cant send verify email',
-                                    ),
-                                  ).show(context),
-                              (r) => AutoRouter.of(context).replace(HomeRoute(
-                                      children: [
-                                        PermissionManagementMainRoute()
-                                      ])));
-                        },
                         onChanged: (value) {
                           password.value = value;
                         },
@@ -100,10 +77,11 @@ class SignInPage extends HookWidget {
                         ),
                       ),
                       onPressed: () async {
-                        final result = await getIt<AuthenticationRepository>()
+                        final result = await authenticationRepository
                             .signInWithEmailAndPassword(
                                 emailAddress: EmailAddress(email.value),
                                 password: Password(password.value));
+
                         result.fold(
                             (l) => FlushbarHelper.createError(
                                   message: l.map(
@@ -116,9 +94,26 @@ class SignInPage extends HookWidget {
                                     cantSendVerifyEmail: (_) =>
                                         'Cant send verify email',
                                   ),
-                                ).show(context),
+                                ).show(context), (r) async {
+                          final backendSignInResult =
+                              await authenticationRepository.signIn();
+
+                          backendSignInResult.fold(
+                            (l) => FlushbarHelper.createError(
+                                message: l.map(
+                              cancelledByUser: (_) => 'Cancelled',
+                              serverError: (_) => 'Server Error',
+                              emailAlreadyInUse: (_) => 'Email already in use',
+                              invalidEmailAndPasswordCombination: (_) =>
+                                  'Invalide email and password combination',
+                              cantSendVerifyEmail: (_) =>
+                                  'Cant send verify email',
+                            )).show(context),
                             (r) => AutoRouter.of(context).replace(HomeRoute(
-                                children: [PermissionManagementMainRoute()])));
+                                children: [PermissionManagementMainRoute()],
+                                currentTab: 0)),
+                          );
+                        });
                       },
                       child: Text(
                         'เข้าสู่ระบบ',
@@ -128,7 +123,6 @@ class SignInPage extends HookWidget {
                             .copyWith(color: Colors.white),
                       ),
                     ),
-
                     Container(
                       alignment: Alignment.centerRight,
                       height: 38.4,
@@ -162,27 +156,57 @@ class SignInPage extends HookWidget {
                         ),
                       ],
                     ),
-
-                    // Text('หรือเข้าสู่ระบบด้วย'),
                     Container(
                         margin: EdgeInsets.only(top: 25.6),
-                        // padding: EdgeInsets.symmetric(vertical: 9),
                         height: 40,
                         width: double.infinity,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8)),
                         child:
-                            SignInButton(Buttons.Facebook, onPressed: () {})),
+                            SignInButton(Buttons.Facebook, onPressed: () async {
+                          final result = await authenticationRepository
+                              .signInWithFacebook();
+                          result.fold(
+                              (l) => FlushbarHelper.createError(
+                                    message: l.map(
+                                      cancelledByUser: (_) => 'Cancelled',
+                                      serverError: (_) => 'Server Error',
+                                      emailAlreadyInUse: (_) =>
+                                          'Email already in use',
+                                      invalidEmailAndPasswordCombination: (_) =>
+                                          'Invalide email and password combination',
+                                      cantSendVerifyEmail: (_) =>
+                                          'Cant send verify email',
+                                    ),
+                                  ).show(context), (r) async {
+                            final backendSignInResult =
+                                await authenticationRepository.signIn();
+                            backendSignInResult.fold(
+                              (l) => FlushbarHelper.createError(
+                                  message: l.map(
+                                cancelledByUser: (_) => 'Cancelled',
+                                serverError: (_) => 'Server Error',
+                                emailAlreadyInUse: (_) =>
+                                    'Email already in use',
+                                invalidEmailAndPasswordCombination: (_) =>
+                                    'Invalide email and password combination',
+                                cantSendVerifyEmail: (_) =>
+                                    'Cant send verify email',
+                              )).show(context),
+                              (r) => AutoRouter.of(context).replace(HomeRoute(
+                                  children: [PermissionManagementMainRoute()],
+                                  currentTab: 0)),
+                            );
+                          });
+                        })),
                     Container(
                         margin: EdgeInsets.symmetric(vertical: 20),
-                        // padding: EdgeInsets.symmetric(vertical: 8),
                         height: 40,
                         width: double.infinity,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8)),
                         child: SignInButton(Buttons.Google, onPressed: () {})),
                     Container(
-                        // padding: EdgeInsets.symmetric(vertical: 9),
                         height: 40,
                         width: double.infinity,
                         decoration: BoxDecoration(

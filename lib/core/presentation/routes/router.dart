@@ -6,6 +6,10 @@ import 'package:frontend_web_app/features/manage_locker_and_equipment/presentati
 import 'package:frontend_web_app/features/manage_locker_and_equipment/presentation/pages/add_locker_form.dart';
 import 'package:frontend_web_app/features/manage_locker_and_equipment/presentation/pages/manage_locker_and_equipment_main.dart';
 import 'package:frontend_web_app/features/permission_management/presentation/pages/add_user_main.dart';
+import 'package:frontend_web_app/features/permission_management/presentation/pages/permission_management_account.dart';
+import 'package:frontend_web_app/features/permission_management/presentation/pages/permission_management_approve.dart';
+import 'package:frontend_web_app/features/permission_management/presentation/pages/permission_management_block.dart';
+import 'package:frontend_web_app/features/permission_management/presentation/pages/permission_management_department.dart';
 import 'package:frontend_web_app/features/permission_management/presentation/pages/permission_management_main.dart';
 import 'package:frontend_web_app/features/repair_report/pages/repair_report_main.dart';
 import 'package:frontend_web_app/features/streaming_and_record/pages/streaming_and_record_main.dart';
@@ -23,9 +27,9 @@ import 'package:frontend_web_app/features/streaming_and_record/pages/streaming_a
       page: HomePage,
       children: [
         AutoRoute(
-          path: 'permission_management_main',
-          page: PermissionManagementMainPage,
-        ),
+            path: 'permission_management_main',
+            page: PermissionManagementMainPage,
+            initial: true),
         AutoRoute(
           path: 'locker_and_equipment_main',
           page: ManageLockerAndEquipmentMainPage,
@@ -39,6 +43,22 @@ import 'package:frontend_web_app/features/streaming_and_record/pages/streaming_a
           page: RepairReportMainPage,
         )
       ],
+    ),
+    AutoRoute(
+      path: 'permission_management_account',
+      page: PermissionManagementAccountPage,
+    ),
+    AutoRoute(
+      path: 'permission_management_approve',
+      page: PermissionManagementApprovePage,
+    ),
+    AutoRoute(
+      path: 'permission_management_block',
+      page: PermissionManagementBlockPage,
+    ),
+    AutoRoute(
+      path: 'permission_management_department',
+      page: PermissionManagementDepartmentPage,
     ),
     AutoRoute(
       path: 'add_user_main',

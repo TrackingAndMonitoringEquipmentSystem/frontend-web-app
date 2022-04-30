@@ -7,9 +7,9 @@ class TitleLeftDropdownField extends HookWidget {
   final List<String> title;
 
   final titleMargin, fieldMargin;
-  final List value;
-  final List<List> items;
-  final List<Function> onChanged;
+  final List<String?> value;
+  final List<List<String>> items;
+  final List<void Function(String)> onChanged;
   final List<String> hint;
 
   const TitleLeftDropdownField({

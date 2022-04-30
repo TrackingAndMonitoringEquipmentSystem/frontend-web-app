@@ -7,7 +7,7 @@ import 'package:frontend_web_app/features/manage_locker_and_equipment/domain/ent
 import 'package:frontend_web_app/features/manage_locker_and_equipment/domain/entities/department.dart';
 import 'package:frontend_web_app/features/manage_locker_and_equipment/domain/entities/locker.dart';
 import 'package:frontend_web_app/features/manage_locker_and_equipment/domain/entities/room.dart';
-import 'package:frontend_web_app/features/manage_locker_and_equipment/domain/locker-repository.dart';
+import 'package:frontend_web_app/features/manage_locker_and_equipment/domain/repositories/locker-repository.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: LockerRepository)
@@ -52,20 +52,23 @@ class LockerRepositoryImpl implements LockerRepository {
     required int id,
     required String name,
     required String description,
-    required List<Department> departments,
+    required Department departments,
     required Room room,
   }) async {
+    print(room);
     final token = await _authenticationRepository.getFirebaseUser!.getIdToken();
     final result = await _lockerRestApi.registerLocker(
       token: token,
       id: id,
       name: name,
       description: description,
-      departmentIds: departments.map((e) => e.id).toList(),
+      departmentIds: departments.id,
       roomId: room.id,
     );
+    print(result);
     return result.fold((l) => Left(l), (r) {
       final locker = Locker.fromJson(r['data'] as Map<String, dynamic>);
+
       return Right(locker);
     });
   }
@@ -104,6 +107,25 @@ class LockerRepositoryImpl implements LockerRepository {
   @override
   Future<Either<RestFailure, Locker>> getLockerByIds(List<int> ids) {
     // TODO: implement getLockerByIds
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<RestFailure, List<int>>> getUnregister() async {
+    final token = await _authenticationRepository.getFirebaseUser!.getIdToken();
+    final result = await _lockerRestApi.getUnregister(token: token);
+    return result.fold((l) => Left(l), (r) {
+      return Right(
+        (r['data'] as List)
+            .map((e) => (e as Map<String, dynamic>)['locker_id'] as int)
+            .toList(),
+      );
+    });
+  }
+
+  @override
+  Future<Either<RestFailure, List<Type>>> getType() {
+    // TODO: implement getType
     throw UnimplementedError();
   }
 }
