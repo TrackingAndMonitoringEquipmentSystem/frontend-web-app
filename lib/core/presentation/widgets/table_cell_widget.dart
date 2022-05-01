@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 
 class TableCellWidget {
@@ -50,14 +52,11 @@ class TableCellWidget {
               color: Colors.grey.shade400,
             ),
           ),
-<<<<<<< HEAD
           // prefixIcon: const Icon(Icons.search),
-=======
-          style: Theme.of(context).primaryTextTheme.bodyText2,
-          onChanged: (value) {
-            onChanged(value);
-          },
->>>>>>> integrate-sign-in-with-api
+          // style: Theme.of(context).primaryTextTheme.bodyText2,
+          // onChanged: (value) {
+          //   onChanged(value);
+          // },
         ),
         style: Theme.of(context).primaryTextTheme.bodyText2,
         onChanged: (value) {
@@ -122,9 +121,21 @@ class TableCellWidget {
   static Widget circleAvatarCell({
     required String imgSrc,
   }) {
-    return CircleAvatar(
-      radius: 20,
-      backgroundImage: Image.asset(imgSrc).image,
+    return Container(
+      height: 40,
+      width: 40,
+      decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(width: 1, color: Colors.grey.shade400),
+          image: DecorationImage(
+              fit: BoxFit.contain,
+              image: NetworkImage(imgSrc == ''
+                  ? 'assets/icons/core/png/logo_icon_medium.png'
+                  : imgSrc))),
+      // child: CircleAvatar(
+      //   radius: 20,
+      //   backgroundImage: Image.network(imgSrc),
+      // ),
     );
   }
 

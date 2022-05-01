@@ -12,6 +12,8 @@ import '../../../../core/presentation/widgets/dropdown_box_widget.dart';
 import '../../../../core/presentation/widgets/search_box_widget.dart';
 import '../../../../core/presentation/widgets/table_header_widget.dart';
 
+import 'package:frontend_web_app/core/utils/environment.dart' as environment;
+
 class PermissionManagementBlockPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,11 @@ class PermissionManagementBlockPage extends HookWidget {
       4: FlexColumnWidth(20),
       5: FlexColumnWidth(33),
     };
+    final uri = Uri(
+      scheme: environment.baseSchema,
+      host: environment.baseApiUrl,
+      port: environment.baseApiPort,
+    );
 
     return Container(
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
@@ -185,8 +192,12 @@ class PermissionManagementBlockPage extends HookWidget {
                                   child: Row(
                                     children: [
                                       TableCellWidget.circleAvatarCell(
-                                          imgSrc:
-                                              'assets/icons/core/png/logo_icon_medium.png'),
+                                          imgSrc: e.profilePicUrl == null ||
+                                                  e.profilePicUrl == ''
+                                              ? ''
+                                              : uri.toString() +
+                                                  '/' +
+                                                  e.profilePicUrl!),
                                       SizedBox(
                                         width: 20,
                                       ),

@@ -62,7 +62,7 @@ class AddLockerPage extends HookWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'ตู้ล็อกเกอร์ 3 รายการ',
+                'ตู้ล็อกเกอร์ ${unregisterLockers.value.length} รายการ',
                 style: Theme.of(context).primaryTextTheme.headline1,
               ),
               SizedBox(height: 40),

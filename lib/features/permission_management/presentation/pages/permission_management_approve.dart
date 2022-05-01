@@ -10,6 +10,8 @@ import 'package:frontend_web_app/features/authentication/domain/entities/user.da
 import 'package:frontend_web_app/features/permission_management/domain/repositories/user-repository.dart';
 import 'package:frontend_web_app/injection.dart';
 
+import 'package:frontend_web_app/core/utils/environment.dart' as environment;
+
 import '../widgets/account_cell_widget.dart';
 // import 'package:frontend_web_app/features/permission_management/presentation/pages/permission_management_approve.dart';
 
@@ -50,6 +52,11 @@ class PermissionManagementApprovePage extends HookWidget {
       4: FlexColumnWidth(20),
       5: FlexColumnWidth(33),
     };
+    final uri = Uri(
+      scheme: environment.baseSchema,
+      host: environment.baseApiUrl,
+      port: environment.baseApiPort,
+    );
 
     return Container(
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
@@ -179,8 +186,12 @@ class PermissionManagementApprovePage extends HookWidget {
                                   child: Row(
                                     children: [
                                       TableCellWidget.circleAvatarCell(
-                                          imgSrc:
-                                              'assets/icons/core/png/logo_icon_medium.png'),
+                                          imgSrc: e.profilePicUrl == null ||
+                                                  e.profilePicUrl == ''
+                                              ? ''
+                                              : uri.toString() +
+                                                  '/' +
+                                                  e.profilePicUrl!),
                                       SizedBox(
                                         width: 20,
                                       ),

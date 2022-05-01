@@ -15,6 +15,8 @@ import 'package:frontend_web_app/features/permission_management/domain/repositor
 import 'package:frontend_web_app/features/permission_management/presentation/widgets/account_cell_widget.dart';
 import 'package:frontend_web_app/injection.dart';
 
+import 'package:frontend_web_app/core/utils/environment.dart' as environment;
+
 class PermissionManagementAccountPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
@@ -53,6 +55,11 @@ class PermissionManagementAccountPage extends HookWidget {
       4: FlexColumnWidth(20),
       5: FlexColumnWidth(33),
     };
+    final uri = Uri(
+      scheme: environment.baseSchema,
+      host: environment.baseApiUrl,
+      port: environment.baseApiPort,
+    );
     return Container(
       padding: EdgeInsets.fromLTRB(38.4, 24, 38.4, 0.0),
       child: Column(
@@ -172,8 +179,12 @@ class PermissionManagementAccountPage extends HookWidget {
                                   child: Row(
                                     children: [
                                       TableCellWidget.circleAvatarCell(
-                                          imgSrc:
-                                              'assets/icons/core/png/logo_icon_medium.png'),
+                                          imgSrc: e.profilePicUrl == null ||
+                                                  e.profilePicUrl == ''
+                                              ? ''
+                                              : uri.toString() +
+                                                  '/' +
+                                                  e.profilePicUrl!),
                                       SizedBox(
                                         width: 20,
                                       ),

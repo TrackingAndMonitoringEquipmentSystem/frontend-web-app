@@ -12,6 +12,7 @@ import 'package:frontend_web_app/features/manage_locker_and_equipment/domain/ent
 import 'package:frontend_web_app/features/manage_locker_and_equipment/domain/repositories/equipment-repository.dart';
 import 'package:frontend_web_app/injection.dart';
 import 'package:intl/intl.dart';
+import 'package:frontend_web_app/core/utils/environment.dart' as environment;
 
 class ManageLockerAndEquipmentEquipmentPage extends HookWidget {
   @override
@@ -30,6 +31,7 @@ class ManageLockerAndEquipmentEquipmentPage extends HookWidget {
             print(result);
             isLoading.value = false;
             print('result: $result');
+
             result.fold(
               (l) => restFailure.value = l,
               (r) => equipments.value = r,
@@ -46,14 +48,20 @@ class ManageLockerAndEquipmentEquipmentPage extends HookWidget {
     final typeDropdown = useState<String>('ทุกหมวดหมู่');
     final statusDropdown = useState<String>('ทุกสถานะ');
     final columnWidths = <int, TableColumnWidth>{
-      0: FlexColumnWidth(11),
+      0: FlexColumnWidth(13),
       1: FlexColumnWidth(9),
       2: FlexColumnWidth(6),
       3: FlexColumnWidth(7),
       4: FlexColumnWidth(8),
       5: FlexColumnWidth(7),
-      6: FlexColumnWidth(12),
+      6: FlexColumnWidth(10),
     };
+    final uri = Uri(
+      scheme: environment.baseSchema,
+      host: environment.baseApiUrl,
+      port: environment.baseApiPort,
+    );
+    print('img uri : ' + uri.toString());
 
     return Container(
       // color: Colors.red,
@@ -163,17 +171,27 @@ class ManageLockerAndEquipmentEquipmentPage extends HookWidget {
                                       horizontal: 38.4, vertical: 16),
                                   child: Row(
                                     children: [
-                                      Expanded(
-                                        flex: 9,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                          child: Image.asset(e.picUrl),
-                                        ),
+                                      Container(
+                                        margin: EdgeInsets.only(right: 8),
+                                        height:
+                                            size.height * (56 / size.height),
+                                        width: size.height * (56 / size.height),
+                                        decoration: BoxDecoration(
+                                            color: Color.fromRGBO(
+                                                228, 237, 245, 1),
+                                            borderRadius:
+                                                BorderRadius.circular(4),
+                                            border: Border.all(
+                                                width: 1,
+                                                color: Colors.grey.shade400),
+                                            image: DecorationImage(
+                                                fit: BoxFit.fitWidth,
+                                                image: NetworkImage(
+                                                    uri.toString() +
+                                                        '/' +
+                                                        e.picUrl))),
                                       ),
-                                      Expanded(flex: 2, child: SizedBox()),
                                       Expanded(
-                                        flex: 16,
                                         child: Text(e.name),
                                       )
                                     ],
@@ -258,7 +276,6 @@ class ManageLockerAndEquipmentEquipmentPage extends HookWidget {
                                       ? 'ไม่มีข้อมูล'
                                       : DateFormat('dd/MM/yyyy\n')
                                               .format(e.updatedAt.toLocal()) +
-                                          '\n' +
                                           e.updatedBy!.firstName +
                                           e.updatedBy!.lastName,
                                   context: context,
