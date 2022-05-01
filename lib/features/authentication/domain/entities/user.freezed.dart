@@ -54,7 +54,7 @@ abstract class $UserTypeCopyWith<$Res> {
       Department? department,
       Role? role});
 
-  $DepartmentCopyWith<$Res>? get department;
+  $DepartmentCopyWith<$Res> get department;
 }
 
 /// @nodoc
@@ -138,12 +138,8 @@ class _$UserTypeCopyWithImpl<$Res> implements $UserTypeCopyWith<$Res> {
   }
 
   @override
-  $DepartmentCopyWith<$Res>? get department {
-    if (_value.department == null) {
-      return null;
-    }
-
-    return $DepartmentCopyWith<$Res>(_value.department!, (value) {
+  $DepartmentCopyWith<$Res> get department {
+    return $DepartmentCopyWith<$Res>(_value.department, (value) {
       return _then(_value.copyWith(department: value));
     });
   }
@@ -170,7 +166,7 @@ abstract class _$UserCopyWith<$Res> implements $UserTypeCopyWith<$Res> {
       Role? role});
 
   @override
-  $DepartmentCopyWith<$Res>? get department;
+  $DepartmentCopyWith<$Res> get department;
 }
 
 /// @nodoc
@@ -390,7 +386,7 @@ abstract class _User implements UserType {
   @override
   DateTime get updatedAt => throw _privateConstructorUsedError;
   @override
-  Department? get department => throw _privateConstructorUsedError;
+  Department get department => throw _privateConstructorUsedError;
   @override
   Role? get role => throw _privateConstructorUsedError;
   @override

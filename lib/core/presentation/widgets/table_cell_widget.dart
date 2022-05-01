@@ -50,7 +50,14 @@ class TableCellWidget {
               color: Colors.grey.shade400,
             ),
           ),
+<<<<<<< HEAD
           // prefixIcon: const Icon(Icons.search),
+=======
+          style: Theme.of(context).primaryTextTheme.bodyText2,
+          onChanged: (value) {
+            onChanged(value);
+          },
+>>>>>>> integrate-sign-in-with-api
         ),
         style: Theme.of(context).primaryTextTheme.bodyText2,
         onChanged: (value) {
