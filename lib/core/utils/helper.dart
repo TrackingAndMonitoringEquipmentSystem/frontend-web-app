@@ -12,3 +12,18 @@ Gender genderFromString(String value) {
       return Gender.unknown;
   }
 }
+
+Role roleFromString(String value) {
+  switch (value) {
+    case 'super_admin':
+      return Role.Superadmin;
+    case 'admin':
+      return Role.Admin;
+    case 'master_maintainer':
+      return Role.Masteraintainer;
+    case 'maintainer':
+      return Role.Maintainer;
+    default:
+      return Role.User;
+  }
+}

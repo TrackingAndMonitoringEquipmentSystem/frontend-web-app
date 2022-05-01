@@ -1,17 +1,17 @@
-enum Role { superAdmin, admin, masterMaintainer, maintainer, user }
+enum Role { Superadmin, Admin, Masteraintainer, Maintainer, User }
 
 extension RoleExtension on Role {
   String toNameString() {
     switch (this) {
-      case Role.superAdmin:
+      case Role.Superadmin:
         return 'Super admin';
-      case Role.admin:
+      case Role.Admin:
         return 'Admin';
-      case Role.masterMaintainer:
+      case Role.Masteraintainer:
         return 'Master maintaner';
-      case Role.maintainer:
+      case Role.Maintainer:
         return 'Maintainer';
-      case Role.user:
+      case Role.User:
         return 'User';
       default:
         return 'unknown role';

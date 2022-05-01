@@ -124,19 +124,19 @@ class RepairReportMainPage extends HookWidget {
                               'วันที่แจ้งซ่อม',
                             ],
                           ),
-                          EquipmentCellWidget(
-                              columnWidths: columnWidths,
-                              imgSrc:
-                                  'assets/images/core/equipment_fluke27ii.png',
-                              equipmentName: 'Fluke 27 II',
-                              macAddress: '8C-29-23-DC-F0-7A',
-                              duration: '',
-                              type: 'Multimeter',
-                              lockerName: 'อุปกรณ์การช่าง',
-                              lockerId: '1',
-                              status: 'ส่งซ่อม',
-                              editDate: '25 ม.ค. 2022',
-                              editBy: 'Saitan Kittibullungkul')
+                          // EquipmentCellWidget(
+                          //     columnWidths: columnWidths,
+                          //     imgSrc:
+                          //         'assets/images/core/equipment_fluke27ii.png',
+                          //     equipmentName: 'Fluke 27 II',
+                          //     macAddress: '8C-29-23-DC-F0-7A',
+                          //     duration: '',
+                          //     type: 'Multimeter',
+                          //     lockerName: 'อุปกรณ์การช่าง',
+                          //     lockerId: '1',
+                          //     status: 'ส่งซ่อม',
+                          //     editDate: '25 ม.ค. 2022',
+                          //     editBy: 'Saitan Kittibullungkul')
                         ],
                       ),
                     ),

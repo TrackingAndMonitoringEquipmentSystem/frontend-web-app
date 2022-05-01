@@ -214,6 +214,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     final token = await _firebaseSigInAuth.getCurrentUser()!.getIdToken();
     final fcmToken = (await _firebaseMessaging.getToken())!;
     final result = await _authRestApi.signIn(token: token, fcmToken: fcmToken);
+    print(result);
     if (result.isLeft()) {
       return const Left(AuthenticationFailure.serverError());
     }

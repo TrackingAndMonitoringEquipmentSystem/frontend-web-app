@@ -16,11 +16,10 @@ class SplashPage extends HookWidget {
       Future<void>.microtask(() async {
         final results =
             await getIt<AuthenticationRepository>().getSignedInUser();
-        if (results == null) {
+        if (results == null)
           AutoRouter.of(context).push(SignInRoute());
-        } else {
-          AutoRouter.of(context).push(HomeRoute());
-        }
+        else
+          AutoRouter.of(context).push(HomeRoute(currentTab: 0));
       });
       return null;
     }, []);

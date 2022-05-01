@@ -23,13 +23,13 @@ class Department with _$Department {
       name: json['dept_name'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
-      createdBy: json.containsKey('created_by')
+      createdBy: json['created_by'] != null
           ? UserType.fromJson(json['created_by'] as Map<String, dynamic>)
           : null,
-      updatedBy: json.containsKey('updated_by')
+      updatedBy: json['updated_by'] != null
           ? UserType.fromJson(json['updated_by'] as Map<String, dynamic>)
           : null,
-      lockers: json.containsKey('locker')
+      lockers: json['locker'] != null
           ? (json['locker'] as List)
               .map((e) => Locker.fromJson(e as Map<String, dynamic>))
               .toList()

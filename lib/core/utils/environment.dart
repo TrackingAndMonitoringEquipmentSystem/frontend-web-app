@@ -1,6 +1,6 @@
-const String baseSchema = 'http';
-const String baseApiUrl = '842c-161-246-5-161.ap.ngrok.io';
-const int baseApiPort = 80;
+const String baseSchema = 'https';
+const String baseApiUrl = '471a-161-246-5-161.ap.ngrok.io';
+const int baseApiPort = 443;
 enum PublicsPath { getDepartments }
 enum AuthenPath { register, signIn, signOut }
 enum LockerPath {
@@ -9,9 +9,13 @@ enum LockerPath {
   registerLocker,
   addEquipment,
   viewLocker,
+  getUnregister
 }
+enum EquipmentPath { saveEquipments, getEquipments, getTypes }
 enum LocationPath { getBuildings }
-enum DepartmentPath { getLockers }
+enum DepartmentPath { getDepartments, getLockers }
+enum UserPath { getUsers, addUser, addUserByCsv, getBlockUser, getWaitingUser }
+
 const Map<PublicsPath, String> publics = {
   PublicsPath.getDepartments: '/publics/departments'
 };
@@ -27,7 +31,8 @@ const Map<LockerPath, String> lockers = {
   LockerPath.getLockers: '/lockers',
   LockerPath.registerLocker: '/lockers/registerLocker',
   LockerPath.addEquipment: '/lockers/addEquipment',
-  LockerPath.viewLocker: '/lockers/viewLocker'
+  LockerPath.viewLocker: '/lockers/viewLocker',
+  LockerPath.getUnregister: '/lockers/getUnregister'
 };
 
 const Map<LocationPath, String> location = {
@@ -35,5 +40,19 @@ const Map<LocationPath, String> location = {
 };
 
 const Map<DepartmentPath, String> department = {
+  DepartmentPath.getDepartments: '/department',
   DepartmentPath.getLockers: '/department/viewLockerByDepartment',
+};
+const Map<EquipmentPath, String> equipment = {
+  EquipmentPath.saveEquipments: '/equipment/saveEquipments',
+  EquipmentPath.getEquipments: '/equipment',
+  EquipmentPath.getTypes: '/type-equipment'
+};
+
+const Map<UserPath, String> user = {
+  UserPath.getUsers: '/users',
+  UserPath.addUser: '/users/createOnWeb',
+  UserPath.addUserByCsv: '/users/upload',
+  UserPath.getBlockUser: '/users/getBlockedUser',
+  UserPath.getWaitingUser: 'users/getWaitingUser',
 };

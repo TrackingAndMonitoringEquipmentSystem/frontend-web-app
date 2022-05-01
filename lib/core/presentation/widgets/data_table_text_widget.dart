@@ -4,22 +4,27 @@ import 'package:frontend_web_app/core/presentation/widgets/table_cell_widget.dar
 
 class DataTableTextWidget extends HookWidget {
   final Map<int, TableColumnWidth> columnWidths;
-  final List<Widget> columnData;
+  final List<List<Widget>> columnData;
+  // final List tableRow;
 
-  final void Function() onPressed;
+  final List<Function()> onPressed;
 
   const DataTableTextWidget({
     required this.columnWidths,
     required this.columnData,
     required this.onPressed,
+    // required this.tableRow
 
     // this.tableRow,
   });
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Container(
-        height: MediaQuery.of(context).size.height - 426.4,
+        decoration: BoxDecoration(),
+        clipBehavior: Clip.hardEdge,
+        height: size.height * (367 / size.height),
         // color: Colors.amber,
         child: ListView(
           children: [
@@ -27,18 +32,20 @@ class DataTableTextWidget extends HookWidget {
               defaultVerticalAlignment: TableCellVerticalAlignment.middle,
               columnWidths: columnWidths,
               children: [
-                TableRow(
-                    decoration: BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(
-                                width: 1, color: Colors.grey.shade300))),
-                    children: [
-                      ...columnData,
-                      TableCellWidget.iconButtonCell(
-                          context: context,
-                          iconScr: Icons.more_horiz,
-                          onPressed: onPressed)
-                    ]),
+                ...(columnData.asMap().entries.map((e) {
+                  return TableRow(
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                                  width: 1, color: Colors.grey.shade200))),
+                      children: [
+                        ...e.value,
+                        TableCellWidget.iconButtonCell(
+                            context: context,
+                            iconScr: Icons.more_horiz_outlined,
+                            onPressed: onPressed[e.key])
+                      ]);
+                })),
               ],
             ),
           ],

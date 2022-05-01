@@ -8,7 +8,6 @@ class AddUserByCsvPage extends HookWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
-      // padding: EdgeInsets.symmetric(horizontal: 38.4),
       child: Column(
         children: [
           Container(
