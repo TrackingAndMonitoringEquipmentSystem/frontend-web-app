@@ -16,6 +16,6 @@ jobs:
       - run: flutter pub get
       - run: flutter build web --release
       - name: clean previous version
-        run: rm -rf $(echo ${{secrets.WEB_PATH}} | base64 --decode)
+        run: rm -rf /var/www/html/toollo.godprogrammer.dev
       - name: deploy new version
-        run: cp -R ./build/web/ $(echo ${{secrets.WEB_PATH}} | base64 --decode)
+        run: cp -R ./build/web/ /var/www/html/toollo.godprogrammer.dev
