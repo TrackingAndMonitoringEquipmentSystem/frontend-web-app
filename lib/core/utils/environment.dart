@@ -1,5 +1,5 @@
 const String baseSchema = 'https';
-const String baseApiUrl = '471a-161-246-5-161.ap.ngrok.io';
+const String baseApiUrl = 'toollo-api.godprogrammer.dev';
 const int baseApiPort = 443;
 enum PublicsPath { getDepartments }
 enum AuthenPath { register, signIn, signOut }
